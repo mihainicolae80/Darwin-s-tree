@@ -1,0 +1,7 @@
+Prezentare:
+Descrierea problemei 
+Cum arata pe seriala
+Rezultate paralele.
+
+
+-lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
