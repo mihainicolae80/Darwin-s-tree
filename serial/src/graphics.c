@@ -6,6 +6,7 @@
 SDL_Window *_window;
 SDL_Renderer *_render;
 
+
 void GFX_init(void)
 {
 	_window = NULL;

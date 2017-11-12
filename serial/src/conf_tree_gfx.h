@@ -1,0 +1,14 @@
+#ifndef CONF_TREE_GFX__H_
+#define CONF_TREE_GFX__H_
+
+#include "conf_graphics.h"
+
+#define TREEGFX_BRANCH_LEN 	50.0f//100.0f
+#define TREEGFX_BRANCH_THICK 	2.0f
+#define TREEGFX_BRANCH_ANGLE	45
+#define TREEGFX_BRANCH_DECAY	0.95
+#define TREEGFX_EARTH_COLOR	0xFF36332D
+#define TREEGFX_EARTH_LEVEL	(SCREEN_HEIGHT - 100)
+#define TREEGFX_EARTH_THICK	2.0f
+
+#endif
