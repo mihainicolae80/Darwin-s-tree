@@ -22,14 +22,16 @@ void TREEGFX_draw_earth()
 
 void TREEGFX_draw(treenode_t *tree, int x, int y, int angle, int depth)
 {
-	int delta_x, delta_y;
+	int delta_x, delta_y, branches = 0;
 	float decay;
+
 
 	// draw each branch recursively
 	if (tree) {
 
 		decay = pow(TREEGFX_BRANCH_DECAY, depth);
 		if (tree->left) {
+			branches ++;
 			delta_x = TREEGFX_BRANCH_LEN
 				* sin(TO_RADIANS(angle - TREEGFX_BRANCH_ANGLE));
 			delta_y = -TREEGFX_BRANCH_LEN
@@ -47,6 +49,7 @@ void TREEGFX_draw(treenode_t *tree, int x, int y, int angle, int depth)
 		}
 
 		if (tree->up) {
+			branches ++;
 			delta_x = TREEGFX_BRANCH_LEN * sin(TO_RADIANS(angle));
 			delta_y = -TREEGFX_BRANCH_LEN * cos(TO_RADIANS(angle));
 			delta_x *= decay;
@@ -62,6 +65,7 @@ void TREEGFX_draw(treenode_t *tree, int x, int y, int angle, int depth)
 		}
 
 		if (tree->right) {
+			branches ++;
 			delta_x = TREEGFX_BRANCH_LEN
 				* sin(TO_RADIANS(angle + TREEGFX_BRANCH_ANGLE));
 			delta_y = -TREEGFX_BRANCH_LEN
@@ -75,6 +79,23 @@ void TREEGFX_draw(treenode_t *tree, int x, int y, int angle, int depth)
 			TREEGFX_draw(	tree->right, x + delta_x, y + delta_y,
 					angle + TREEGFX_BRANCH_ANGLE,
 					depth + 1
+			);
+		}
+
+		// draw leaf
+		if (0 == branches) {
+			boxColor(_render,
+				x - TREEGFX_LEAF_SIZE/2,
+				y - TREEGFX_LEAF_SIZE/2,
+				x + TREEGFX_LEAF_SIZE/2,
+				y + TREEGFX_LEAF_SIZE/2,
+				TREEGFX_LEAF_COLOR
+			);
+
+		// draw knot
+		} else {
+			filledCircleColor(_render, x, y, TREEGFX_KNOT_SIZE,
+					TREEGFX_KNOT_COLOR
 			);
 		}
 	}

@@ -8,6 +8,7 @@ typedef struct tree {
 
 
 void tree_init(treenode_t **root);
+void tree_copy(treenode_t **dest, treenode_t **source);
 void tree_build(treenode_t *node, char **branches);
 void tree_free(treenode_t **root);
 void tree_iterate(treenode_t *root);

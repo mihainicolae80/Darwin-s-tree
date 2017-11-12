@@ -2,6 +2,8 @@
 #include "conf_graphics.h"
 #include "tree.h"
 #include "tree_gfx.h"
+#include <stdlib.h>
+#include <time.h>
 
 int main()
 {
@@ -12,6 +14,8 @@ int main()
 	char *tree3_auxgenome = "uulbrbullbrbubbrrbllbrbbu";
 	treenode_t *tree, *tree2, *tree3;
 
+	srand(time(NULL));
+
 	tree_init(&tree);
 	tree_init(&tree2);
 	tree_init(&tree3);
@@ -19,8 +23,6 @@ int main()
 	tree_build(tree, &tree_auxgenome);
 	tree_build(tree2, &tree2_auxgenome);
 	tree_build(tree3, &tree3_auxgenome);
-
-
 
 	// init
 	run = true;
@@ -63,8 +65,6 @@ int main()
 		);
 
 		TREEGFX_draw_earth();
-
-
 		GFX_Present();
 	}
 

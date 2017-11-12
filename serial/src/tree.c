@@ -44,6 +44,20 @@ void tree_build(treenode_t *node, char **branches)
 	}
 }
 
+// TODO Check
+void tree_copy(treenode_t **dest, treenode_t **source)
+{
+	if (*source == NULL) {
+		*dest = NULL;
+		return;
+	}
+
+	tree_init(dest);
+	tree_copy(&((*dest)->left), &((*source)->left));
+	tree_copy(&((*dest)->up), &((*source)->up));
+	tree_copy(&((*dest)->right), &((*source)->right));
+}
+
 void tree_free(treenode_t **root)
 {
 	if (*root != NULL) {
