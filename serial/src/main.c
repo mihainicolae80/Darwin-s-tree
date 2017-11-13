@@ -41,7 +41,8 @@ int main()
 		}
 
 		// logic
-		//SDL_Delay(1000);
+		EVO_mutate(tree3);
+		SDL_Delay(50);
 
 
 		// render

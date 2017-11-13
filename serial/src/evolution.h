@@ -5,5 +5,6 @@
 #include <stdlib.h>
 
 void EVO_crossover(treenode_t *child,treenode_t *parent1, treenode_t *parent2);
+void EVO_mutate(treenode_t *tree);
 
 #endif

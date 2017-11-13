@@ -15,4 +15,6 @@
 #define TREEGFX_KNOT_SIZE	2.0f
 #define TREEGFX_KNOT_COLOR	0xff00AA00
 
+// TODO Combine config files where possible
+
 #endif

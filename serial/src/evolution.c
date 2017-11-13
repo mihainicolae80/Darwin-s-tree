@@ -1,6 +1,8 @@
 #include "evolution.h"
 
-
+/////////// EVOLUTION ///////////
+#define EVO_MUTATION_ADD_ONEIN	500
+#define EVO_MUTATION_RM_ONEIN	100
 
 void EVO_crossover(treenode_t *child, treenode_t *parent1, treenode_t *parent2)
 {
@@ -56,4 +58,50 @@ void EVO_crossover(treenode_t *child, treenode_t *parent1, treenode_t *parent2)
 			tree_copy(&(child->right), &(parent2->right));
 		}
 	}
+}
+
+void EVO_mutate(treenode_t *tree)
+{
+	// left
+	if (NULL == tree->left) {
+		if (rand() % EVO_MUTATION_ADD_ONEIN == 0)
+			tree_init(&(tree->left));
+	} else if ((NULL == tree->left->left)
+		&& (NULL == tree->left->up)
+		&& (NULL == tree->left->right)) {
+		if (rand() % EVO_MUTATION_RM_ONEIN == 0) {
+			tree_free(&(tree->left));
+		}
+	}
+	if (tree->left)
+		EVO_mutate(tree->left);
+
+
+	// right
+	if (NULL == tree->right) {
+		if (rand() % EVO_MUTATION_ADD_ONEIN == 0)
+			tree_init(&(tree->right));
+	} else if ((NULL == tree->right->left)
+		&& (NULL == tree->right->up)
+		&& (NULL == tree->right->right)) {
+		if (rand() % EVO_MUTATION_RM_ONEIN == 0) {
+			tree_free(&(tree->right));
+		}
+	}
+	if (tree->right)
+		EVO_mutate(tree->right);
+
+	// up
+	if (NULL == tree->up) {
+		if (rand() % EVO_MUTATION_ADD_ONEIN == 0)
+			tree_init(&(tree->up));
+	} else if ((NULL == tree->up->left)
+		&& (NULL == tree->up->up)
+		&& (NULL == tree->up->right)) {
+		if (rand() % EVO_MUTATION_RM_ONEIN == 0) {
+			tree_free(&(tree->up));
+		}
+	}
+	if (tree->up)
+		EVO_mutate(tree->up);
 }
