@@ -3,7 +3,7 @@
 
 #include "conf_graphics.h"
 
-#define TREEGFX_BRANCH_LEN 	50.0f//100.0f
+#define TREEGFX_BRANCH_LEN 	40.0f//100.0f
 #define TREEGFX_BRANCH_THICK 	2.0f
 #define TREEGFX_BRANCH_ANGLE	45
 #define TREEGFX_BRANCH_DECAY	0.95

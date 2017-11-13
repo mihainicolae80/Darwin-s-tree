@@ -6,7 +6,7 @@ CC_DEP=$(CC) $^
 
 
 
-build: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o
+build: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o ./obj/evolution.o
 	$(CC) -o main $^  -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx -lm
 
 run:
@@ -21,3 +21,6 @@ run:
 	$(CC) $(CFLAGS) ./src/tree.c
 ./obj/tree_gfx.o: ./src/tree_gfx.h ./src/tree_gfx.c ./src/conf_tree_gfx.h
 	$(CC) $(CFLAGS) ./src/tree_gfx.c
+
+./obj/evolution.o: ./src/evolution.h ./src/evolution.c
+	$(CC) $(CFLAGS) ./src/evolution.c
