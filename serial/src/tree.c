@@ -1,6 +1,9 @@
 #include "tree.h"
 #include <malloc.h>
 #include <stdio.h>
+#include "misc.h"
+#include "conf_tree_gfx.h"
+#include "conf_evolution.h"
 
 void tree_init(treenode_t **root)
 {
@@ -9,7 +12,6 @@ void tree_init(treenode_t **root)
 	(*root)->right 	=
 	(*root)->up 	= NULL;
 }
-
 
 void tree_build(treenode_t *node, char **branches)
 {
@@ -93,5 +95,63 @@ void tree_iterate(treenode_t *root)
 		}
 
 		printf("b\n");
+	}
+}
+
+
+void tree_get_leafs(treenode_t *node, SDL_Rect *leafs, int *index, int x, int y, int angle, int depth)
+{
+	float delta_x, delta_y;
+	float decay;
+	if (node != NULL) {
+		// add new leaf to array
+		if (TREEGFX_MAX_NUM_LEAF <= (*index)) {
+			printf("Max nr of leafs exceeded!\n");
+			return;
+		} else if (!node->left && !node->right && !node->up){
+			leafs[(*index)].x = x - EVO_LEAF_SIZE/2;
+			leafs[(*index)].y = y - EVO_LEAF_SIZE/2;
+			leafs[(*index)].w = EVO_LEAF_SIZE;
+			leafs[(*index)++].h = EVO_LEAF_SIZE;
+		}
+
+		decay = pow(TREEGFX_BRANCH_DECAY, depth);
+		// left
+		delta_x = TREEGFX_BRANCH_LEN
+			* sin(TO_RADIANS(angle - TREEGFX_BRANCH_ANGLE));
+		delta_y = -TREEGFX_BRANCH_LEN
+			* cos(TO_RADIANS(angle - TREEGFX_BRANCH_ANGLE));
+		delta_x *= decay;
+		delta_y *= decay;
+		tree_get_leafs(	node->left, leafs, index,
+				x + delta_x,
+				y + delta_y,
+				BOUND_ANGLE(angle - TREEGFX_BRANCH_ANGLE),
+				depth + 1
+		);
+		/// up
+		delta_x = TREEGFX_BRANCH_LEN * sin(TO_RADIANS(angle));
+		delta_y = -TREEGFX_BRANCH_LEN * cos(TO_RADIANS(angle));
+		delta_x *= decay;
+		delta_y *= decay;
+		tree_get_leafs(	node->up, leafs, index,
+				x + delta_x,
+				y + delta_y,
+				angle,
+				depth + 1
+		);
+		// right
+		delta_x = TREEGFX_BRANCH_LEN
+			* sin(TO_RADIANS(angle + TREEGFX_BRANCH_ANGLE));
+		delta_y = -TREEGFX_BRANCH_LEN
+			* cos(TO_RADIANS(angle + TREEGFX_BRANCH_ANGLE));
+		delta_x *= decay;
+		delta_y *= decay;
+		tree_get_leafs(	node->right, leafs, index,
+				x + delta_x,
+				y + delta_y,
+				BOUND_ANGLE(angle + TREEGFX_BRANCH_ANGLE),
+				depth + 1
+		);
 	}
 }

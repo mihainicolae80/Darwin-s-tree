@@ -1,8 +1,6 @@
 #include "evolution.h"
+#include "conf_evolution.h"
 
-/////////// EVOLUTION ///////////
-#define EVO_MUTATION_ADD_ONEIN	500
-#define EVO_MUTATION_RM_ONEIN	100
 
 void EVO_crossover(treenode_t *child, treenode_t *parent1, treenode_t *parent2)
 {

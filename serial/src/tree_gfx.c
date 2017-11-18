@@ -1,13 +1,10 @@
 #include "tree_gfx.h"
 #include "conf_tree_gfx.h"
+#include "conf_evolution.h"
 #include "tree.h"
 #include "graphics.h"
 #include <math.h>
-
-#define PI 3.14159
-#define ABS(x)	((x) < 0 ? -(x) : (x))
-#define SIGN(x)	(x < 0 ? -1 : 1)
-#define TO_RADIANS(x) ((double)PI * ((ABS((int)(x)) % 360) * SIGN((int)(x))) / 180)
+#include "misc.h"
 
 void TREEGFX_draw_earth()
 {
@@ -22,7 +19,8 @@ void TREEGFX_draw_earth()
 
 void TREEGFX_draw(treenode_t *tree, int x, int y, int angle, int depth)
 {
-	int delta_x, delta_y, branches = 0;
+	int branches = 0;
+	float delta_x, delta_y;
 	float decay;
 
 
@@ -85,10 +83,10 @@ void TREEGFX_draw(treenode_t *tree, int x, int y, int angle, int depth)
 		// draw leaf
 		if (0 == branches) {
 			boxColor(_render,
-				x - TREEGFX_LEAF_SIZE/2,
-				y - TREEGFX_LEAF_SIZE/2,
-				x + TREEGFX_LEAF_SIZE/2,
-				y + TREEGFX_LEAF_SIZE/2,
+				x - EVO_LEAF_SIZE/2,
+				y - EVO_LEAF_SIZE/2,
+				x + EVO_LEAF_SIZE/2,
+				y + EVO_LEAF_SIZE/2,
 				TREEGFX_LEAF_COLOR
 			);
 
