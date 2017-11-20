@@ -8,7 +8,8 @@ CC_DEP=$(CC) $^
 
 build: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o ./obj/evolution.o ./obj/sun.o ./obj/misc.o
 	$(CC) -o main $^  -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx -lm
-
+clean:
+	rm ./obj/*
 run:
 	./main
 

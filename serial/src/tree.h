@@ -20,6 +20,6 @@ void tree_free(treenode_t **root);
 void tree_iterate(treenode_t *root);
 void tree_get_size(treenode_t *root);
 void tree_copy_leafs(treenode_t *root);
-void tree_get_leafs(treenode_t *node, SDL_Rect *leafs, int *index, int x, int y, int angle, int depth);
+void tree_get_leafs(treenode_t *node, SDL_Rect *leafs, int *index, int *num_branch, int x, int y, int angle, int depth);
 
 #endif

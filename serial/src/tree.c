@@ -99,11 +99,12 @@ void tree_iterate(treenode_t *root)
 }
 
 
-void tree_get_leafs(treenode_t *node, SDL_Rect *leafs, int *index, int x, int y, int angle, int depth)
+void tree_get_leafs(treenode_t *node, SDL_Rect *leafs, int *index, int *num_branch, int x, int y, int angle, int depth)
 {
 	float delta_x, delta_y;
 	float decay;
 	if (node != NULL) {
+		(*num_branch) ++;
 		// add new leaf to array
 		if (TREEGFX_MAX_NUM_LEAF <= (*index)) {
 			printf("Max nr of leafs exceeded!\n");
@@ -123,9 +124,9 @@ void tree_get_leafs(treenode_t *node, SDL_Rect *leafs, int *index, int x, int y,
 			* cos(TO_RADIANS(angle - TREEGFX_BRANCH_ANGLE));
 		delta_x *= decay;
 		delta_y *= decay;
-		tree_get_leafs(	node->left, leafs, index,
-				x + delta_x,
-				y + delta_y,
+		tree_get_leafs(	node->left, leafs, index, num_branch,
+				delta_x + x,
+				delta_y + y,
 				BOUND_ANGLE(angle - TREEGFX_BRANCH_ANGLE),
 				depth + 1
 		);
@@ -134,9 +135,9 @@ void tree_get_leafs(treenode_t *node, SDL_Rect *leafs, int *index, int x, int y,
 		delta_y = -TREEGFX_BRANCH_LEN * cos(TO_RADIANS(angle));
 		delta_x *= decay;
 		delta_y *= decay;
-		tree_get_leafs(	node->up, leafs, index,
-				x + delta_x,
-				y + delta_y,
+		tree_get_leafs(	node->up, leafs, index, num_branch,
+				delta_x + x,
+				delta_y + y,
 				angle,
 				depth + 1
 		);
@@ -147,9 +148,9 @@ void tree_get_leafs(treenode_t *node, SDL_Rect *leafs, int *index, int x, int y,
 			* cos(TO_RADIANS(angle + TREEGFX_BRANCH_ANGLE));
 		delta_x *= decay;
 		delta_y *= decay;
-		tree_get_leafs(	node->right, leafs, index,
-				x + delta_x,
-				y + delta_y,
+		tree_get_leafs(	node->right, leafs, index, num_branch,
+				delta_x + x,
+				delta_y + y,
 				BOUND_ANGLE(angle + TREEGFX_BRANCH_ANGLE),
 				depth + 1
 		);

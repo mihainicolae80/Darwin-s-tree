@@ -12,166 +12,86 @@
 
 int main()
 {
+	//char *tree_auxgenome = "ulbrbuuulrbllbrrblbbbbrlbrrblrbl";
+	//char *tree_auxgenome = "uulbrbullbrbubbrrbllbrbbu";
+	//char *tree2_auxgenome = "uulbrbullbrbubbrrbllbrbbu";
 	bool run;
 	SDL_Event event;
-	char *tree_auxgenome = "ulbrbuuulrbllbrrblbbbbrlbrrblrbl";
-	//char *tree2_auxgenome = "uulbrbullbrbubbrrbllbrbbu";
-	treenode_t *tree, *tree2, *tree3 = NULL;
-	SDL_Rect leafs[TREEGFX_MAX_NUM_LEAF];
-	int index, i;
-
-	srand(time(NULL));
-	SUN_init();
-	tree_init(&tree);
-	//tree_init(&tree2);
-	tree_build(tree, &tree_auxgenome);
-	//tree_build(tree2, &tree2_auxgenome);
-
-	// offspring
-	//tree_free(&tree3);
-	//tree_init(&tree3);
-	//EVO_crossover(tree3, tree, tree2);
-
-	// get all leafs as rectangles
-	tree_get_leafs(	tree, leafs, &index,
-			SCREEN_WIDTH / 2,
-			SCREEN_HEIGHT - 100,
-			0,
-			0
-	);
+	char *tree_genome[EVO_UNITS_ON_GENERATION];
+	treenode_t *tree[2][EVO_UNITS_ON_GENERATION];
+	int i, buffer = 0, generation = 0;
+	float fitness[EVO_UNITS_ON_GENERATION], fitness_mean;
+	FILE *fitness_graph_file;
 
 	// init
-	run = true;
 	GFX_init();
-	// main loop
-	while (run) {
-		// handle events
-		while (SDL_PollEvent(&event)) {
-			SUN_handle_mouse_event(&event);
-
-			if (event.type == SDL_QUIT) {
-				run = false;
-			}
-		}
-
-		// logic
-
-		// render
-		GFX_Clear(GFX_WHITE);
+	srand(time(NULL));
+	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
+		tree[0][i] = NULL;
+		tree[1][i] = NULL;
+	}
+	fitness_graph_file = fopen("fitness.out", "w");
 
 
-		TREEGFX_draw(	tree,
-				SCREEN_WIDTH / 2,
-				SCREEN_HEIGHT - 100,
-				0,
-				0
-		);
-
-		for (i = 0; i < index; i ++) {
-			SDL_SetRenderDrawColor(	_render,
-						GFX_COLOR_GET_RED(GFX_RED),
-						GFX_COLOR_GET_GREEN(GFX_RED),
-						GFX_COLOR_GET_BLUE(GFX_RED),
-						GFX_COLOR_GET_ALPHA(GFX_RED)
-			);
-			SDL_RenderFillRect(_render, &leafs[i]);
-		}
-
-		int dx[] = {	-EVO_LEAF_SIZE/3,	0, EVO_LEAF_SIZE/3,
-				-EVO_LEAF_SIZE/3, 	0, EVO_LEAF_SIZE/3,
-				-EVO_LEAF_SIZE/3,	0, EVO_LEAF_SIZE/3};
-		int dy[] = {	-EVO_LEAF_SIZE/3, -EVO_LEAF_SIZE/3,-EVO_LEAF_SIZE/3,
-						0,		0,		0,
-				 EVO_LEAF_SIZE/3,  EVO_LEAF_SIZE/3, EVO_LEAF_SIZE/3};
-
-		// draw sun exposed blocks
-		int lx, ly, k, q, l;
-		SDL_Rect subleaf;
-		float m;
-		float px, py;
-		bool collision;
-		// light on every leaf
-		for (i = 0; i < index; i++) {
-			// leaf on every subleaf
-			for (q = 0; q < 9; q ++) {
-				// subleaf center coordinates
-				lx = leafs[i].x + leafs[i].w/2 + dx[q];
-				ly = leafs[i].y + leafs[i].h/2 + dy[q];
-				// compute intermediary points
-				collision = false;
-				for(l = 0; l < 5000 && !collision; l++) {
-					px = lx + l *((float)SUN_get_x() - lx) / 5000;
-					py = ly + l * ((float)SUN_get_y() - ly) / 5000;
-
-					// check collision with all other blocks
-					for (k = 0; k < index; k++) {
-						if ((k != i)
-						&& (px >= leafs[k].x)
-						&& (px <= leafs[k].x + leafs[k].w)
-						&& (py >= leafs[k].y)
-						&& (py <= leafs[k].y + leafs[k].h)
-						){
-							collision = true;
-							break;
-						}
-					}
-				}
-
-				if (!collision) {
-					SDL_SetRenderDrawColor(	_render,
-						GFX_COLOR_GET_RED(GFX_GREEN),
-						GFX_COLOR_GET_GREEN(GFX_GREEN),
-						GFX_COLOR_GET_BLUE(GFX_GREEN),
-						GFX_COLOR_GET_ALPHA(GFX_GREEN)
-					);
-					subleaf.x = lx - EVO_LEAF_SIZE / 6;
-					subleaf.y = ly - EVO_LEAF_SIZE / 6;
-					subleaf.w = EVO_LEAF_SIZE / 3;
-					subleaf.h = EVO_LEAF_SIZE / 3;
-					SDL_RenderFillRect(_render, &subleaf);
-				} else {
-					SDL_SetRenderDrawColor(	_render,
-						GFX_COLOR_GET_RED(GFX_RED),
-						GFX_COLOR_GET_GREEN(GFX_RED),
-						GFX_COLOR_GET_BLUE(GFX_RED),
-						GFX_COLOR_GET_ALPHA(GFX_RED)
-					);
-				}
-
-				SDL_RenderDrawLine(_render, lx, ly, SUN_get_x(), SUN_get_y());
-			}
-
-		}
-
-
-		/*
-		TREEGFX_draw(	tree2,
-				SCREEN_WIDTH * 2 / 4,
-				SCREEN_HEIGHT - 100,
-				0,
-				0
-		);
-
-		TREEGFX_draw(	tree3,
-				SCREEN_WIDTH * 3 / 4,
-				SCREEN_HEIGHT - 100,
-				0,
-				0
-		);
-		*/
-
-		TREEGFX_draw_earth();
-
-		SUN_draw();
-
-		GFX_Present();
+	// generate initial population
+	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
+		tree_genome[i] = malloc(sizeof(char) * EVO_INITIAL_NUM_BRANCHES);
+		EVO_get_random_genome(tree_genome[i], EVO_INITIAL_NUM_BRANCHES);
+		tree_init(&tree[0][i]);
+		tree_build(tree[0][i], &tree_genome[i]);
 	}
 
+	// main loop
+	run = true;
+	while (run) {
 
-	tree_free(&tree);
-	tree_free(&tree2);
-	tree_free(&tree3);
+		// ======= EVOLVE ======
+		printf("======= Generation %d ====== \n", generation);
+
+		// fitness
+		fitness_mean = 0;
+		for (i = 0; i < EVO_UNITS_ON_GENERATION && run; i++) {
+			fitness[i] = EVO_fitness(tree[buffer][i], false);
+			printf("tree[%d] fitness %f\n",i, fitness[i]);
+			fitness_mean += fitness[i];
+			// handle events
+			while (SDL_PollEvent(&event)) {
+				if (event.type == SDL_QUIT) {
+					run = false;
+					break;
+				}
+			}
+		}
+
+		// sort by fitness
+		EVO_sort_by_fitness(fitness, &tree[buffer][0]);
+		// crossover of fittest in other buffer
+		EVO_crossover_on_generation(&tree[!buffer][0], &tree[buffer][0]);
+		// mutate trees
+		for (i = 0; i < EVO_UNITS_ON_GENERATION; i++)
+			EVO_mutate(tree[!buffer][i]);
+
+		printf(	"Generation mean fitness %f\n",
+			fitness_mean / EVO_UNITS_ON_GENERATION
+		 );
+		 fprintf(fitness_graph_file, "%d ", (int)(fitness_mean / EVO_UNITS_ON_GENERATION));
+
+		buffer = !buffer;
+		generation ++;
+	}
+
+	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
+		if (tree[0][i] != NULL) {
+			tree_free(&tree[0][i]);
+		}
+		if (tree[1][i] != NULL) {
+			tree_free(&tree[1][i]);
+		}
+	}
+
+	//free(tree_genome);
 	SDL_Quit();
+	fclose(fitness_graph_file);
 
 	return 0;
 }

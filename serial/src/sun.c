@@ -53,3 +53,13 @@ int SUN_get_y()
 {
 	return _data.y;
 }
+
+void SUN_set_x(int x)
+{
+	_data.x = x;
+}
+
+void SUN_set_y(int y)
+{
+	_data.y = y;
+}
