@@ -6,8 +6,9 @@ CC_DEP=$(CC) $^
 
 
 
-build: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o ./obj/evolution.o ./obj/sun.o ./obj/misc.o
-	$(CC) -o main $^  -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx -lm
+build: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o ./obj/evolution.o \
+./obj/sun.o ./obj/misc.o ./obj/threads.o
+	$(CC) -o main $^  -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx -lm -pthread
 clean:
 	rm ./obj/*
 run:
@@ -26,6 +27,7 @@ run:
 	$(CC) $(CFLAGS) ./src/evolution.c
 ./obj/sun.o: ./src/sun.h ./src/sun.c ./src/conf_sun.h
 	$(CC) $(CFLAGS) ./src/sun.c
-
 ./obj/misc.o: ./src/misc.h ./src/misc.c
 	$(CC) $(CFLAGS) ./src/misc.c
+./obj/threads.o: ./src/threads.h ./src/threads.c
+	$(CC) $(CFLAGS) ./src/threads.c

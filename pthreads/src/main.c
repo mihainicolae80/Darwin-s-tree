@@ -9,20 +9,20 @@
 #include "sun.h"
 #include "conf_evolution.h"
 #include "misc.h"
+#include <pthread.h>
+#include "threads.h"
+#include <unistd.h>
 
 int main()
 {
-	bool run, gfx_on;
+	bool gfx_on;
 	SDL_Event event;
-	char *tree_genome[EVO_UNITS_ON_GENERATION];
-	treenode_t *tree[2][EVO_UNITS_ON_GENERATION];
-	int i, buffer = 0, generation = 0;
-	float fitness[EVO_UNITS_ON_GENERATION], fitness_mean;
+	int i, generation = 0;
 	FILE *fitness_graph_file;
 	FILE *time_graph_file;
 	char *aux_genome;
+	float fitness_mean;
 	uint32_t start_time;
-
 
 	// init
 	GFX_init();
@@ -43,55 +43,58 @@ int main()
 		tree_build(tree[0][i], &aux_genome);
 	}
 
-	// main loop
-	run = true;
+	// prepare locks
+	pthread_barrier_init(&THR_barrier_1, NULL, EVO_UNITS_ON_GENERATION + 1);
+	pthread_barrier_init(&THR_barrier_2, NULL, EVO_UNITS_ON_GENERATION + 1);
+	pthread_barrier_init(&THR_barrier_3, NULL, EVO_UNITS_ON_GENERATION + 1);
+
+	// start threads
+	THR_run = true;
 	gfx_on = false;
 	start_time = SDL_GetTicks();
-	while (run) {
+	THR_start_threads();
+	// main loop
+	while (THR_run) {
 		// ======= EVOLVE ======
 		printf("======= Generation %d ====== \n", generation);
-
-		// fitness
-		fitness_mean = 0;
-		for (i = 0; i < EVO_UNITS_ON_GENERATION && run; i++) {
-			fitness[i] = EVO_fitness(tree[buffer][i], gfx_on);
-			printf("tree[%d] fitness %f\n",i, fitness[i]);
-			fitness_mean += fitness[i];
-
-			// handle events
-			while (SDL_PollEvent(&event)) {
-				if (event.type == SDL_QUIT) {
-					run = false;
+		// wait for fitness data
+		pthread_barrier_wait(&THR_barrier_1);
+		// handle events
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_QUIT) {
+				THR_run = false;
+				break;
+			} else if (event.type == SDL_KEYDOWN) {
+				if (event.key.keysym.sym == SDLK_g)
+					gfx_on = !gfx_on;
+				else if (event.key.keysym.sym == SDLK_s)  {
+					THR_run = false;
 					break;
-				} else if (event.type == SDL_KEYDOWN) {
-					if (event.key.keysym.sym == SDLK_g)
-						gfx_on = !gfx_on;
-					else if (event.key.keysym.sym == SDLK_s)  {
-						run = false;
-						break;
-					}
 				}
 			}
 		}
 
+		// compute mean fitness
+		fitness_mean = 0;
+		for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
+			fitness_mean += fitness[i];
+		}
+		fitness_mean /= EVO_UNITS_ON_GENERATION;
 		// sort by fitness
 		EVO_sort_by_fitness(fitness, &tree[buffer][0]);
 		// crossover of fittest in other buffer
 		EVO_crossover_on_generation(&tree[!buffer][0], &tree[buffer][0]);
-		// mutate trees
-		for (i = 0; i < EVO_UNITS_ON_GENERATION; i++)
-			EVO_mutate(tree[!buffer][i]);
-
 		printf(	"Generation mean fitness %f\n",
-			fitness_mean / EVO_UNITS_ON_GENERATION
+			fitness_mean
 		);
-
-		fprintf(fitness_graph_file, "%d\n", (int)(fitness_mean / EVO_UNITS_ON_GENERATION));
+		fprintf(fitness_graph_file, "%d\n", (int)(fitness_mean));
 		fprintf(time_graph_file, "%d\n", (int)(SDL_GetTicks() - start_time));
-
+		pthread_barrier_wait(&THR_barrier_2);
 		buffer = !buffer;
 		generation ++;
+		pthread_barrier_wait(&THR_barrier_3);
 	}
+	THR_wait_for_threads();
 
 
 	// show last best tree
@@ -105,15 +108,15 @@ int main()
 	GFX_Present();
 
 	// wait for key press
-	run = true;
-	while (run) {
+	THR_run = true;
+	while (THR_run) {
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
-				run = false;
+				THR_run = false;
 				break;
 			} else if (event.type == SDL_KEYDOWN) {
 				if (event.key.keysym.sym == SDLK_s)  {
-					run = false;
+					THR_run = false;
 					break;
 				}
 			}
