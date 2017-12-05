@@ -150,7 +150,7 @@ float EVO_fitness(treenode_t *tree, bool render)
 		sun_y = TREEGFX_EARTH_LEVEL - (TREEGFX_EARTH_LEVEL - 50)
 			* sin((float)PI * sun_x / SCREEN_WIDTH);
 
-		#pragma omp parallel for private(q)	
+		#pragma omp parallel private(q)	
 		for (i = 0; i < index; i++) {
 			// leaf on every subleaf
 			for (q = 0; q < 9; q ++) {

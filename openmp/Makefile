@@ -11,7 +11,7 @@ build: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o ./obj/evoluti
 clean:
 	rm ./obj/*
 run:
-	time ./main
+	./main
 
 ./obj/main.o: ./src/main.c ./src/graphics.h ./src/conf_graphics.h \
 	./src/tree.h ./src/tree_gfx.h

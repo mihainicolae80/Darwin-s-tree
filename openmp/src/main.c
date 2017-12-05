@@ -52,12 +52,18 @@ int main()
 			{
 				// ======= EVOLVE ======
 				printf("======= Generation %d\n", generation);
+				while (SDL_PollEvent(&event)) {
+					if (event.type == SDL_QUIT) {
+						run = false;
+						break;
+					}
+				}
 			}
 			
 			// fitness
 			fitness_mean = 0;
 
-			#pragma omp for private(i, fitness) reduction(+:fitness_mean)
+			#pragma omp for private(i, fitness) firstprivate(tree) reduction(+:fitness_mean)
 			for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
 					if (run) {
 						fitness[i] = EVO_fitness(tree[buffer][i], false);
@@ -66,26 +72,17 @@ int main()
 					}
 			}
 
-			// handle events
-			#pragma omp master
+			#pragma omp single
 			{
-				while (SDL_PollEvent(&event)) {
+				// sort by fitness
+				EVO_sort_by_fitness(fitness, &tree[buffer][0]);
 
-					if (event.type == SDL_QUIT) {
-						run = false;
-						break;
-					}
-				}
+				// crossover of fittest in other buffer
+				EVO_crossover_on_generation(&tree[!buffer][0], &tree[buffer][0]);
 			}
 
-			// sort by fitness
-			EVO_sort_by_fitness(fitness, &tree[buffer][0]);
-
-			// crossover of fittest in other buffer
-			EVO_crossover_on_generation(&tree[!buffer][0], &tree[buffer][0]);
-
 			// mutate trees
-			#pragma omp parallel private(i)
+			#pragma omp for private(i)
 			for (i = 0; i < EVO_UNITS_ON_GENERATION; i++)
 				EVO_mutate(tree[!buffer][i]);
 
