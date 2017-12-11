@@ -53,7 +53,6 @@ int main()
 				// ======= EVOLVE ======
 				printf("======= Generation %d\n", generation);
 				while (SDL_PollEvent(&event)) {
-
 					if (event.type == SDL_QUIT) {
 						run = false;
 						break;
@@ -64,7 +63,7 @@ int main()
 			// fitness
 			fitness_mean = 0;
 
-			#pragma omp for private(i, fitness) reduction(+:fitness_mean)
+			#pragma omp for private(i, fitness) firstprivate(tree) reduction(+:fitness_mean)
 			for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
 					if (run) {
 						fitness[i] = EVO_fitness(tree[buffer][i], false);
@@ -81,7 +80,6 @@ int main()
 				// crossover of fittest in other buffer
 				EVO_crossover_on_generation(&tree[!buffer][0], &tree[buffer][0]);
 			}
-
 
 			// mutate trees
 			#pragma omp for private(i)
