@@ -26,7 +26,7 @@ int main()
 
 	// init
 	GFX_init();
-	srand(time(NULL));
+	srand(0);
 	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
 		tree[0][i] = NULL;
 		tree[1][i] = NULL;
