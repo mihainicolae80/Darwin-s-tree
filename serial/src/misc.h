@@ -2,6 +2,8 @@
 #define MISC__H_
 
 #include <math.h>
+#include "conf_evolution.h"
+
 
 #define PI 3.14159
 #define ABS(x)	((x) < 0 ? -(x) : (x))
@@ -11,5 +13,11 @@
 
 
 float distance(float x, float y, float x2, float y2);
+
+
+extern int rand_val[EVO_UNITS_ON_GENERATION][1000];
+extern int rand_index[EVO_UNITS_ON_GENERATION];
+
+void MISC_gen_rand(void);
 
 #endif

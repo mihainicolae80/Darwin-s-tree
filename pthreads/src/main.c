@@ -13,6 +13,8 @@
 #include "threads.h"
 #include <unistd.h>
 
+#define NUM_GEN		5
+
 int main()
 {
 	bool gfx_on;
@@ -20,9 +22,11 @@ int main()
 	int i, generation = 0;
 	FILE *fitness_graph_file;
 	FILE *time_graph_file;
+	FILE *time_on_cores;
 	char *aux_genome;
 	float fitness_mean;
 	uint32_t start_time;
+	char filename_time[100];
 
 	// init
 	GFX_init();
@@ -33,6 +37,7 @@ int main()
 	}
 	fitness_graph_file = fopen("fitness.out", "w");
 	time_graph_file = fopen("time.out", "w");
+	//sprintf(filename_time, "time_cores_%d", NUM_THR);
 
 	// generate initial population
 	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
@@ -74,6 +79,10 @@ int main()
 			}
 		}
 
+		if (NUM_GEN -1 == generation) {
+			THR_run = false;
+		}
+
 		// compute mean fitness
 		fitness_mean = 0;
 		for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
@@ -88,13 +97,16 @@ int main()
 			fitness_mean
 		);
 		fprintf(fitness_graph_file, "%d\n", (int)(fitness_mean));
-		fprintf(time_graph_file, "%d\n", (int)(SDL_GetTicks() - start_time));
+
 		pthread_barrier_wait(&THR_barrier_2);
 		buffer = !buffer;
 		generation ++;
 		pthread_barrier_wait(&THR_barrier_3);
 	}
 	THR_wait_for_threads();
+
+
+	fprintf(time_graph_file, "%d\n", (int)(SDL_GetTicks() - start_time));
 
 
 	// show last best tree

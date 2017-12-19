@@ -4,14 +4,16 @@ CFLAGS=-Wall -g  -c -o $@
 CC_DEP=$(CC) $^
 
 
+run: main
+	./main
 
+build: main
 
-build: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o ./obj/evolution.o ./obj/sun.o ./obj/misc.o
-	$(CC) -o main $^  -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx -lm
 clean:
 	rm ./obj/*
-run:
-	./main
+
+main: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o ./obj/evolution.o ./obj/sun.o ./obj/misc.o
+	$(CC) -o main $^  -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx -lm
 
 ./obj/main.o: ./src/main.c ./src/graphics.h ./src/conf_graphics.h \
 	./src/tree.h ./src/tree_gfx.h

@@ -6,6 +6,7 @@
 #include "tree.h"
 #include "tree_gfx.h"
 #include "conf_tree_gfx.h"
+#include "threads.h"
 
 
 void EVO_crossover(treenode_t *child, treenode_t *parent1, treenode_t *parent2)

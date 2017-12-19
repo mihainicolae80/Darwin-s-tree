@@ -65,50 +65,50 @@ void EVO_crossover(treenode_t *child, treenode_t *parent1, treenode_t *parent2)
 	}
 }
 
-void EVO_mutate(treenode_t *tree)
+void EVO_mutate(treenode_t *tree, int unit_index)
 {
 	// left
 	if (NULL == tree->left) {
-		if (rand() % EVO_MUTATION_ADD_ONEIN == 0)
+		if (rand_val[unit_index][rand_index[unit_index]++] % EVO_MUTATION_ADD_ONEIN == 0)
 			tree_init(&(tree->left));
 	} else if ((NULL == tree->left->left)
 		&& (NULL == tree->left->up)
 		&& (NULL == tree->left->right)) {
-		if (rand() % EVO_MUTATION_RM_ONEIN == 0) {
+		if (rand_val[unit_index][rand_index[unit_index]++] % EVO_MUTATION_RM_ONEIN == 0) {
 			tree_free(&(tree->left));
 		}
 	}
 	if (tree->left)
-		EVO_mutate(tree->left);
+		EVO_mutate(tree->left, unit_index);
 
 
 	// right
 	if (NULL == tree->right) {
-		if (rand() % EVO_MUTATION_ADD_ONEIN == 0)
+		if (rand_val[unit_index][rand_index[unit_index]++] % EVO_MUTATION_ADD_ONEIN == 0)
 			tree_init(&(tree->right));
 	} else if ((NULL == tree->right->left)
 		&& (NULL == tree->right->up)
 		&& (NULL == tree->right->right)) {
-		if (rand() % EVO_MUTATION_RM_ONEIN == 0) {
+		if (rand_val[unit_index][rand_index[unit_index]++] % EVO_MUTATION_RM_ONEIN == 0) {
 			tree_free(&(tree->right));
 		}
 	}
 	if (tree->right)
-		EVO_mutate(tree->right);
+		EVO_mutate(tree->right, unit_index);
 
 	// up
 	if (NULL == tree->up) {
-		if (rand() % EVO_MUTATION_ADD_ONEIN == 0)
+		if (rand_val[unit_index][rand_index[unit_index]++] % EVO_MUTATION_ADD_ONEIN == 0)
 			tree_init(&(tree->up));
 	} else if ((NULL == tree->up->left)
 		&& (NULL == tree->up->up)
 		&& (NULL == tree->up->right)) {
-		if (rand() % EVO_MUTATION_RM_ONEIN == 0) {
+		if (rand_val[unit_index][rand_index[unit_index]++] % EVO_MUTATION_RM_ONEIN == 0) {
 			tree_free(&(tree->up));
 		}
 	}
 	if (tree->up)
-		EVO_mutate(tree->up);
+		EVO_mutate(tree->up, unit_index);
 }
 
 float EVO_fitness(treenode_t *tree, bool render)

@@ -1,0 +1,161 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ABS	src/misc.h	9;"	d
+BOUND_ANGLE	src/misc.h	11;"	d
+CC	Makefile	/^CC=gcc$/;"	m
+CC_DEP	Makefile	/^CC_DEP=$(CC) $^$/;"	m
+CFLAGS	Makefile	/^CFLAGS=-Wall -g  -c -o $@$/;"	m
+CONF_EVOLUTION__H_	src/conf_evolution.h	2;"	d
+CONF_SUN__H_	src/conf_sun.h	2;"	d
+CONF_TREE_GFX__H_	src/conf_tree_gfx.h	2;"	d
+EVOLUTION__H_	src/evolution.h	2;"	d
+EVO_INITIAL_NUM_BRANCHES	src/conf_evolution.h	9;"	d
+EVO_LEAF_SIZE	src/conf_evolution.h	4;"	d
+EVO_MUTATION_ADD_ONEIN	src/conf_evolution.h	5;"	d
+EVO_MUTATION_RM_ONEIN	src/conf_evolution.h	6;"	d
+EVO_SUN_MOVEMENT_RADIUS	src/conf_evolution.h	7;"	d
+EVO_SUN_SAMPLES	src/conf_evolution.h	10;"	d
+EVO_SUN_STEP_INC	src/conf_evolution.h	11;"	d
+EVO_UNITS_ON_GENERATION	src/conf_evolution.h	8;"	d
+EVO_crossover	src/evolution.c	/^void EVO_crossover(treenode_t *child, treenode_t *parent1, treenode_t *parent2)$/;"	f
+EVO_crossover_on_generation	src/evolution.c	/^void 	EVO_crossover_on_generation(treenode_t **dest, treenode_t **src)$/;"	f
+EVO_draw_tree	src/evolution.c	/^void EVO_draw_tree(treenode_t *tree)$/;"	f
+EVO_fitness	src/evolution.c	/^float EVO_fitness(treenode_t *tree, bool render)$/;"	f
+EVO_get_random_genome	src/evolution.c	/^void EVO_get_random_genome(char genome[], int maxlen)$/;"	f
+EVO_mutate	src/evolution.c	/^void EVO_mutate(treenode_t *tree, int unit_index)$/;"	f
+EVO_sort_by_fitness	src/evolution.c	/^void EVO_sort_by_fitness(float *fitness, treenode_t **trees)$/;"	f
+GFX_BLACK	src/graphics.h	17;"	d
+GFX_BLUE	src/graphics.h	20;"	d
+GFX_COLOR_GET_ALPHA	src/graphics.h	21;"	d
+GFX_COLOR_GET_BLUE	src/graphics.h	24;"	d
+GFX_COLOR_GET_GREEN	src/graphics.h	23;"	d
+GFX_COLOR_GET_RED	src/graphics.h	22;"	d
+GFX_Clear	src/graphics.h	/^static inline void GFX_Clear(GFX_color_t color)$/;"	f
+GFX_GREEN	src/graphics.h	19;"	d
+GFX_Present	src/graphics.h	/^static inline void GFX_Present()$/;"	f
+GFX_RED	src/graphics.h	18;"	d
+GFX_SetDrawColor	src/graphics.h	/^static inline void GFX_SetDrawColor(GFX_color_t color)$/;"	f
+GFX_WHITE	src/graphics.h	16;"	d
+GFX_color_t	src/graphics.h	/^typedef uint32_t GFX_color_t;$/;"	t
+GFX_drawline	src/graphics.h	/^static inline void GFX_drawline(int x, int y, int x2, int y2, float thick, GFX_color_t color)$/;"	f
+GFX_init	src/graphics.c	/^void GFX_init(void)$/;"	f
+MISC__H_	src/misc.h	2;"	d
+MISC_gen_rand	src/misc.c	/^void MISC_gen_rand(void)$/;"	f
+NUM_GEN	src/main.c	17;"	d	file:
+NUM_THREADS	src/threads.h	10;"	d
+PI	src/misc.h	8;"	d
+QUEUE__H_	src/queue.h	2;"	d
+QUEUE_dequeue	src/queue.c	/^task_t QUEUE_dequeue(void)$/;"	f
+QUEUE_enqueue	src/queue.c	/^void QUEUE_enqueue(task_t task)$/;"	f
+QUEUE_init	src/queue.c	/^void QUEUE_init()$/;"	f
+QUEUE_size	src/queue.c	/^int QUEUE_size()$/;"	f
+SCREENC_COLOR	src/conf_graphics.h	8;"	d
+SCREEN_HEIGHT	src/conf_graphics.h	7;"	d
+SCREEN_WIDTH	src/conf_graphics.h	6;"	d
+SIGN	src/misc.h	10;"	d
+SUN_COLOR	src/conf_sun.h	5;"	d
+SUN_RADIUS	src/conf_sun.h	4;"	d
+SUN__H_	src/sun.h	2;"	d
+SUN_draw	src/sun.c	/^void SUN_draw()$/;"	f
+SUN_get_x	src/sun.c	/^int SUN_get_x()$/;"	f
+SUN_get_y	src/sun.c	/^int SUN_get_y()$/;"	f
+SUN_handle_mouse_event	src/sun.c	/^void SUN_handle_mouse_event(SDL_Event *event)$/;"	f
+SUN_init	src/sun.c	/^void SUN_init()$/;"	f
+SUN_set_x	src/sun.c	/^void SUN_set_x(int x)$/;"	f
+SUN_set_y	src/sun.c	/^void SUN_set_y(int y)$/;"	f
+THREADPOOL_H__	src/threadpool.h	2;"	d
+THR_barrier_1	src/threads.c	/^pthread_barrier_t THR_barrier_1, THR_barrier_2, THR_barrier_3;$/;"	v
+THR_barrier_2	src/threads.c	/^pthread_barrier_t THR_barrier_1, THR_barrier_2, THR_barrier_3;$/;"	v
+THR_barrier_3	src/threads.c	/^pthread_barrier_t THR_barrier_1, THR_barrier_2, THR_barrier_3;$/;"	v
+THR_canwork	src/threads.c	/^pthread_mutex_t THR_canwork;$/;"	v
+THR_canwork_cond	src/threads.c	/^pthread_cond_t THR_canwork_cond;$/;"	v
+THR_cond_array_init	src/threads.c	/^void THR_cond_array_init(pthread_cond_t *cond, int num)$/;"	f
+THR_done	src/threads.c	/^pthread_mutex_t THR_done[EVO_UNITS_ON_GENERATION];$/;"	v
+THR_done_cond	src/threads.c	/^pthread_cond_t THR_done_cond[EVO_UNITS_ON_GENERATION];$/;"	v
+THR_mutex_array_init	src/threads.c	/^void THR_mutex_array_init(pthread_mutex_t *mutexes, int num)$/;"	f
+THR_mutex_array_lock	src/threads.c	/^void THR_mutex_array_lock(pthread_mutex_t *mutexes, int num)$/;"	f
+THR_mutex_array_unlock	src/threads.c	/^void THR_mutex_array_unlock(pthread_mutex_t *mutexes, int num)$/;"	f
+THR_run	src/threads.c	/^bool THR_run;$/;"	v
+THR_start_threads	src/threads.c	/^void THR_start_threads(int num_threads, thread_foo_t foo)$/;"	f
+THR_thread	src/threads.c	/^void *THR_thread(void *threadid)$/;"	f
+THR_wait_for_threads	src/threads.c	/^void THR_wait_for_threads(void)$/;"	f
+TO_RADIANS	src/misc.h	12;"	d
+TPOOL_enqueue	src/threadpool.c	/^void TPOOL_enqueue(task_t task)$/;"	f
+TPOOL_init	src/threadpool.c	/^void TPOOL_init(void)$/;"	f
+TPOOL_join	src/threadpool.c	/^void TPOOL_join(void)$/;"	f
+TPOOL_start	src/threadpool.c	/^void TPOOL_start(int num_threads)$/;"	f
+TPOOL_wait_for_all	src/threadpool.c	/^void TPOOL_wait_for_all(void)$/;"	f
+TREEGFX_BRANCH_ANGLE	src/conf_tree_gfx.h	8;"	d
+TREEGFX_BRANCH_DECAY	src/conf_tree_gfx.h	9;"	d
+TREEGFX_BRANCH_LEN	src/conf_tree_gfx.h	6;"	d
+TREEGFX_BRANCH_THICK	src/conf_tree_gfx.h	7;"	d
+TREEGFX_EARTH_COLOR	src/conf_tree_gfx.h	10;"	d
+TREEGFX_EARTH_LEVEL	src/conf_tree_gfx.h	11;"	d
+TREEGFX_EARTH_THICK	src/conf_tree_gfx.h	12;"	d
+TREEGFX_KNOT_COLOR	src/conf_tree_gfx.h	15;"	d
+TREEGFX_KNOT_SIZE	src/conf_tree_gfx.h	14;"	d
+TREEGFX_LEAF_COLOR	src/conf_tree_gfx.h	13;"	d
+TREEGFX_MAX_NUM_LEAF	src/conf_tree_gfx.h	16;"	d
+TREEGFX_draw	src/tree_gfx.c	/^void TREEGFX_draw(treenode_t *tree, int x, int y, int angle, int depth)$/;"	f
+TREEGFX_draw_earth	src/tree_gfx.c	/^void TREEGFX_draw_earth()$/;"	f
+TREE_GFX__H_	src/tree_gfx.h	2;"	d
+TREE__H_	src/tree.h	2;"	d
+_SIZE	src/queue.c	4;"	d	file:
+_THREADS__H_	src/threads.h	2;"	d
+__CONF_GRAPHICS_H__	src/conf_graphics.h	2;"	d
+__GRAPHICS_H__	src/graphics.h	2;"	d
+_busy_threads	src/threadpool.c	/^static int _busy_threads;$/;"	v	file:
+_cond_queue	src/threadpool.c	/^static pthread_cond_t _cond_queue, _cond_wait_all;$/;"	v	file:
+_cond_wait_all	src/threadpool.c	/^static pthread_cond_t _cond_queue, _cond_wait_all;$/;"	v	file:
+_data	src/queue.c	/^task_t _data[_SIZE];$/;"	v
+_data	src/sun.c	/^}_data;$/;"	v	typeref:struct:__anon2	file:
+_dequeue	src/threadpool.c	/^static task_t _dequeue()$/;"	f	file:
+_mux_aux	src/threadpool.c	/^static pthread_mutex_t _mux_aux, _mux_wait_all;$/;"	v	file:
+_mux_cond	src/threadpool.c	/^static pthread_mutex_t _mux_queue, _mux_cond;$/;"	v	file:
+_mux_queue	src/threadpool.c	/^static pthread_mutex_t _mux_queue, _mux_cond;$/;"	v	file:
+_mux_wait_all	src/threadpool.c	/^static pthread_mutex_t _mux_aux, _mux_wait_all;$/;"	v	file:
+_render	src/graphics.c	/^SDL_Renderer *_render;$/;"	v
+_thread	src/threadpool.c	/^static void *_thread(void *threadid)$/;"	f	file:
+_threads	src/threads.c	/^static pthread_t _threads[NUM_THREADS];$/;"	v	file:
+_window	src/graphics.c	/^SDL_Window *_window;$/;"	v
+buffer	src/threads.c	/^int  buffer = 0;$/;"	v
+callback	src/queue.h	/^	callback_t callback;$/;"	m	struct:__anon1
+callback_t	src/queue.h	/^typedef void (*callback_t)(int);$/;"	t
+delegate_fitness	src/main.c	/^void delegate_fitness(int id) {$/;"	f
+delegate_mutate	src/main.c	/^void delegate_mutate(int id) {$/;"	f
+distance	src/misc.c	/^float distance(float x, float y, float x2, float y2)$/;"	f
+fitness	src/threads.c	/^float fitness[EVO_UNITS_ON_GENERATION];$/;"	v
+gfx_on	src/threads.c	/^bool gfx_on;$/;"	v
+head	src/queue.c	/^int head, tail, size;$/;"	v
+index	src/queue.h	/^	int index;$/;"	m	struct:__anon1
+leafarray	src/tree.h	/^typedef struct leafarray{$/;"	s
+leafarray_t	src/tree.h	/^}leafarray_t;$/;"	t	typeref:struct:leafarray
+lears	src/tree.h	/^	SDL_Rect *lears;$/;"	m	struct:leafarray
+left	src/tree.h	/^	struct tree *left, *right, *up;$/;"	m	struct:tree	typeref:struct:tree::tree
+main	src/main.c	/^int main()$/;"	f
+rand_index	src/misc.c	/^int rand_index[EVO_UNITS_ON_GENERATION];$/;"	v
+rand_val	src/misc.c	/^int rand_val[EVO_UNITS_ON_GENERATION][1000];$/;"	v
+right	src/tree.h	/^	struct tree *left, *right, *up;$/;"	m	struct:tree	typeref:struct:tree::
+selected	src/sun.c	/^	bool selected;$/;"	m	struct:__anon2	file:
+size	src/queue.c	/^int head, tail, size;$/;"	v
+size	src/tree.h	/^	int size;$/;"	m	struct:leafarray
+tail	src/queue.c	/^int head, tail, size;$/;"	v
+task_t	src/queue.h	/^} task_t;$/;"	t	typeref:struct:__anon1
+thread_foo_t	src/threads.h	/^typedef void* (*thread_foo_t)(void*);$/;"	t
+tree	src/threads.c	/^treenode_t *tree[2][EVO_UNITS_ON_GENERATION];$/;"	v
+tree	src/tree.h	/^typedef struct tree {$/;"	s
+tree_build	src/tree.c	/^void tree_build(treenode_t *node, char **branches)$/;"	f
+tree_copy	src/tree.c	/^void tree_copy(treenode_t **dest, treenode_t **source)$/;"	f
+tree_free	src/tree.c	/^void tree_free(treenode_t **root)$/;"	f
+tree_genome	src/threads.c	/^char *tree_genome[EVO_UNITS_ON_GENERATION];$/;"	v
+tree_get_leafs	src/tree.c	/^void tree_get_leafs(	treenode_t *node, SDL_Rect *leafs, int *index,$/;"	f
+tree_init	src/tree.c	/^void tree_init(treenode_t **root)$/;"	f
+tree_iterate	src/tree.c	/^void tree_iterate(treenode_t *root)$/;"	f
+treenode_t	src/tree.h	/^} treenode_t;$/;"	t	typeref:struct:tree
+up	src/tree.h	/^	struct tree *left, *right, *up;$/;"	m	struct:tree	typeref:struct:tree::
+x	src/sun.c	/^	int x, y;$/;"	m	struct:__anon2	file:
+y	src/sun.c	/^	int x, y;$/;"	m	struct:__anon2	file:

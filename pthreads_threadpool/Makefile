@@ -2,7 +2,6 @@
 CC=gcc
 CFLAGS=-Wall -g  -c -o $@
 CC_DEP=$(CC) $^
-SDL_FLAGS=-lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx
 
 
 run: main
@@ -11,10 +10,11 @@ run: main
 build: main
 
 clean:
-	rm ./obj/*
+	rm -f ./obj/*
 
-main: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o ./obj/evolution.o ./obj/sun.o ./obj/misc.o
-	$(CC) -o main $^ $(SDL_FLAGS) -lm
+main: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o ./obj/evolution.o \
+./obj/sun.o ./obj/misc.o ./obj/threads.o ./obj/threadpool.o ./obj/queue.o
+	$(CC) -o main $^ -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx -lm -pthread
 
 
 ./obj/main.o: ./src/main.c ./src/graphics.h ./src/conf_graphics.h \
@@ -32,3 +32,9 @@ main: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o ./obj/evolutio
 	$(CC) $(CFLAGS) ./src/sun.c
 ./obj/misc.o: ./src/misc.h ./src/misc.c
 	$(CC) $(CFLAGS) ./src/misc.c
+./obj/threads.o: ./src/threads.h ./src/threads.c
+	$(CC) $(CFLAGS) ./src/threads.c
+./obj/threadpool.o: ./src/threadpool.h ./src/threadpool.c
+	$(CC) $(CFLAGS) ./src/threadpool.c
+./obj/queue.o: ./src/queue.h ./src/queue.c
+	$(CC) $(CFLAGS) ./src/queue.c

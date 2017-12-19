@@ -9,24 +9,41 @@
 #include "sun.h"
 #include "conf_evolution.h"
 #include "misc.h"
+#include "threads.h"
+#include "threadpool.h"
+#include <stdio.h>
+#include "misc.h"
 
 #define NUM_GEN		4
 
 
+void delegate_fitness(int id) {
+	fitness[id] = EVO_fitness(tree[buffer][id], false);
+	printf("fitness[%d]=%f\n", id, fitness[id]);
+}
+
+void delegate_mutate(int id) {
+	EVO_mutate(tree[!buffer][id], id);
+}
+
+
 int main()
 {
-	bool run, gfx_on;
-	SDL_Event event;
-	char *tree_genome[EVO_UNITS_ON_GENERATION], *aux_genome;
-	treenode_t *tree[2][EVO_UNITS_ON_GENERATION];
-	int i, buffer = 0, generation = 0, gen;
-	float fitness[EVO_UNITS_ON_GENERATION], fitness_mean;
-	FILE *fitness_graph_file, *time_graph_file;
-	uint32_t start_time;
 
+	bool gfx_on;
+	SDL_Event event;
+	int i, generation = 0;
+	FILE *fitness_graph_file, *time_graph_file, *time_on_cores;
+	char *aux_genome, filename_time[100];
+	float fitness_mean;
+	uint32_t start_time;
+	task_t task;
 
 	// init
 	GFX_init();
+	TPOOL_init();
+	TPOOL_start(4);
+
 	srand(0);
 	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
 		tree[0][i] = NULL;
@@ -34,6 +51,7 @@ int main()
 	}
 	fitness_graph_file = fopen("fitness.out", "w");
 	time_graph_file = fopen("time.out", "w");
+	//sprintf(filename_time, "time_cores_%d", NUM_THR);
 
 	// generate initial population
 	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
@@ -44,58 +62,67 @@ int main()
 		tree_build(tree[0][i], &aux_genome);
 	}
 
-	// main loop
-	run = true;
+	// start threads
+	THR_run = true;
 	gfx_on = false;
 	start_time = SDL_GetTicks();
-
-	for (gen = 0; gen < NUM_GEN; gen ++){
-
+	// main loop
+	while (THR_run) {
 		// ======= EVOLVE ======
 		printf("======= Generation %d ====== \n", generation);
-
-		// fitness
-		fitness_mean = 0;
-		for (i = 0; i < EVO_UNITS_ON_GENERATION && run; i++) {
-			fitness[i] = EVO_fitness(tree[buffer][i], gfx_on);
-			printf("tree[%d] fitness %f\n",i, fitness[i]);
-			fitness_mean += fitness[i];
-
-			// handle events
-			while (SDL_PollEvent(&event)) {
-				if (event.type == SDL_QUIT) {
-					run = false;
+		// handle events
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_QUIT) {
+				THR_run = false;
+				break;
+			} else if (event.type == SDL_KEYDOWN) {
+				if (event.key.keysym.sym == SDLK_g)
+					gfx_on = !gfx_on;
+				else if (event.key.keysym.sym == SDLK_s)  {
+					THR_run = false;
 					break;
-				} else if (event.type == SDL_KEYDOWN) {
-					if (event.key.keysym.sym == SDLK_g)
-						gfx_on = !gfx_on;
-					else if (event.key.keysym.sym == SDLK_s)  {
-						run = false;
-						break;
-					}
 				}
 			}
 		}
 
+		// compute mean fitness
+		fitness_mean = 0;
+		for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
+			task.callback = delegate_fitness;
+			task.index = i;
+			TPOOL_enqueue(task);
+		}
+		TPOOL_wait_for_all();
+		for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
+			fitness_mean += fitness[i];
+		}
+		fitness_mean /= EVO_UNITS_ON_GENERATION;
 		// sort by fitness
 		EVO_sort_by_fitness(fitness, &tree[buffer][0]);
 		// crossover of fittest in other buffer
 		EVO_crossover_on_generation(&tree[!buffer][0], &tree[buffer][0]);
-		// mutate trees
-		MISC_gen_rand();
-		for (i = 0; i < EVO_UNITS_ON_GENERATION; i++)
-			EVO_mutate(tree[!buffer][i], i);
-
 		printf(	"Generation mean fitness %f\n",
-			fitness_mean / EVO_UNITS_ON_GENERATION
+			fitness_mean
 		);
-
-		fprintf(fitness_graph_file, "%d\n", (int)(fitness_mean / EVO_UNITS_ON_GENERATION));
-
+		fprintf(fitness_graph_file, "%d\n", (int)(fitness_mean));
+		MISC_gen_rand();
+		for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
+			task.callback = delegate_mutate;
+			task.index = i;
+			TPOOL_enqueue(task);
+		}
+		TPOOL_wait_for_all();
 
 		buffer = !buffer;
 		generation ++;
+
+		if (NUM_GEN == generation) {
+			break;
+		}
 	}
+
+	TPOOL_join();
+
 
 	fprintf(time_graph_file, "%d\n", (int)(SDL_GetTicks() - start_time));
 
@@ -109,7 +136,6 @@ int main()
 			0
 	);
 	GFX_Present();
-
 
 	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
 		if (tree[0][i] != NULL) {
@@ -127,6 +153,7 @@ int main()
 	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
 		free(tree_genome[i]);
 	}
+
 
 	return 0;
 }
