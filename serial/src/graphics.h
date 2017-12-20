@@ -6,6 +6,7 @@
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include "misc.h"
 
 typedef uint32_t GFX_color_t;
 
@@ -25,6 +26,8 @@ extern SDL_Renderer *_render;
 
 
 void GFX_init(void);
+
+#ifdef __SDL__
 
 static inline void GFX_SetDrawColor(GFX_color_t color)
 {
@@ -57,6 +60,29 @@ static inline void GFX_Present()
 {
 	SDL_RenderPresent(_render);
 }
+
+#else
+
+static inline void GFX_SetDrawColor(GFX_color_t color)
+{
+}
+
+static inline void GFX_drawline(int x, int y, int x2, int y2, float thick, GFX_color_t color)
+{
+}
+
+static inline void GFX_Clear(GFX_color_t color)
+{
+}
+
+static inline void GFX_Present()
+{
+}
+
+
+
+#endif
+
 
 
 

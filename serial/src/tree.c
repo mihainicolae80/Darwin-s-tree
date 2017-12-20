@@ -99,7 +99,7 @@ void tree_iterate(treenode_t *root)
 }
 
 
-void tree_get_leafs(	treenode_t *node, SDL_Rect *leafs, int *index,
+void tree_get_leafs(	treenode_t *node, rect_t *leafs, int *index,
 			int *num_branch, int x, int y, int angle, int depth, int *maxdepth)
 {
 	float delta_x, delta_y;

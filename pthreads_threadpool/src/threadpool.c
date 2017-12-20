@@ -1,6 +1,8 @@
 #include "threadpool.h"
 #include "threads.h"
 #include "queue.h"
+#include <stdio.h>
+#include <stdint.h>
 
 
 static pthread_mutex_t _mux_queue, _mux_cond;

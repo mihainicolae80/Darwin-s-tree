@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include "evolution.h"
 
-static pthread_t _threads[NUM_THREADS];
+static pthread_t _threads[20];
 bool THR_run;
 
 

@@ -4,8 +4,8 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-ABS	src/misc.h	9;"	d
-BOUND_ANGLE	src/misc.h	11;"	d
+ABS	src/misc.h	18;"	d
+BOUND_ANGLE	src/misc.h	20;"	d
 CC	Makefile	/^CC=gcc -fopenmp$/;"	m
 CC_DEP	Makefile	/^CC_DEP=$(CC) $^$/;"	m
 CFLAGS	Makefile	/^CFLAGS=-Wall -g  -c -o $@$/;"	m
@@ -28,41 +28,33 @@ EVO_fitness	src/evolution.c	/^float EVO_fitness(treenode_t *tree, bool render)$/
 EVO_get_random_genome	src/evolution.c	/^void EVO_get_random_genome(char genome[], int maxlen)$/;"	f
 EVO_mutate	src/evolution.c	/^void EVO_mutate(treenode_t *tree, int unit_index)$/;"	f
 EVO_sort_by_fitness	src/evolution.c	/^void EVO_sort_by_fitness(float *fitness, treenode_t **trees)$/;"	f
-GFX_BLACK	src/graphics.h	17;"	d
-GFX_BLUE	src/graphics.h	20;"	d
-GFX_COLOR_GET_ALPHA	src/graphics.h	21;"	d
-GFX_COLOR_GET_BLUE	src/graphics.h	24;"	d
-GFX_COLOR_GET_GREEN	src/graphics.h	23;"	d
-GFX_COLOR_GET_RED	src/graphics.h	22;"	d
+GFX_BLACK	src/graphics.h	18;"	d
+GFX_BLUE	src/graphics.h	21;"	d
+GFX_COLOR_GET_ALPHA	src/graphics.h	22;"	d
+GFX_COLOR_GET_BLUE	src/graphics.h	25;"	d
+GFX_COLOR_GET_GREEN	src/graphics.h	24;"	d
+GFX_COLOR_GET_RED	src/graphics.h	23;"	d
 GFX_Clear	src/graphics.h	/^static inline void GFX_Clear(GFX_color_t color)$/;"	f
-GFX_GREEN	src/graphics.h	19;"	d
+GFX_GREEN	src/graphics.h	20;"	d
 GFX_Present	src/graphics.h	/^static inline void GFX_Present()$/;"	f
-GFX_RED	src/graphics.h	18;"	d
+GFX_RED	src/graphics.h	19;"	d
 GFX_SetDrawColor	src/graphics.h	/^static inline void GFX_SetDrawColor(GFX_color_t color)$/;"	f
-GFX_WHITE	src/graphics.h	16;"	d
+GFX_WHITE	src/graphics.h	17;"	d
 GFX_color_t	src/graphics.h	/^typedef uint32_t GFX_color_t;$/;"	t
 GFX_drawline	src/graphics.h	/^static inline void GFX_drawline(int x, int y, int x2, int y2, float thick, GFX_color_t color)$/;"	f
 GFX_init	src/graphics.c	/^void GFX_init(void)$/;"	f
 MISC__H_	src/misc.h	2;"	d
 MISC_gen_rand	src/misc.c	/^void MISC_gen_rand(void)$/;"	f
-NUM_GEN	src/main.c	15;"	d	file:
-NUM_THREADS	src/main.c	14;"	d	file:
-PI	src/misc.h	8;"	d
+NUM_GEN	src/main.c	14;"	d	file:
+NUM_THREADS	src/main.c	13;"	d	file:
+PI	src/misc.h	17;"	d
 SCREENC_COLOR	src/conf_graphics.h	8;"	d
 SCREEN_HEIGHT	src/conf_graphics.h	7;"	d
 SCREEN_WIDTH	src/conf_graphics.h	6;"	d
-SIGN	src/misc.h	10;"	d
+SIGN	src/misc.h	19;"	d
 SUN_COLOR	src/conf_sun.h	5;"	d
 SUN_RADIUS	src/conf_sun.h	4;"	d
-SUN__H_	src/sun.h	2;"	d
-SUN_draw	src/sun.c	/^void SUN_draw()$/;"	f
-SUN_get_x	src/sun.c	/^int SUN_get_x()$/;"	f
-SUN_get_y	src/sun.c	/^int SUN_get_y()$/;"	f
-SUN_handle_mouse_event	src/sun.c	/^void SUN_handle_mouse_event(SDL_Event *event)$/;"	f
-SUN_init	src/sun.c	/^void SUN_init()$/;"	f
-SUN_set_x	src/sun.c	/^void SUN_set_x(int x)$/;"	f
-SUN_set_y	src/sun.c	/^void SUN_set_y(int y)$/;"	f
-TO_RADIANS	src/misc.h	12;"	d
+TO_RADIANS	src/misc.h	21;"	d
 TREEGFX_BRANCH_ANGLE	src/conf_tree_gfx.h	8;"	d
 TREEGFX_BRANCH_DECAY	src/conf_tree_gfx.h	9;"	d
 TREEGFX_BRANCH_LEN	src/conf_tree_gfx.h	6;"	d
@@ -80,28 +72,29 @@ TREE_GFX__H_	src/tree_gfx.h	2;"	d
 TREE__H_	src/tree.h	2;"	d
 __CONF_GRAPHICS_H__	src/conf_graphics.h	2;"	d
 __GRAPHICS_H__	src/graphics.h	2;"	d
-_data	src/sun.c	/^}_data;$/;"	v	typeref:struct:__anon1	file:
 _render	src/graphics.c	/^SDL_Renderer *_render;$/;"	v
 _window	src/graphics.c	/^SDL_Window *_window;$/;"	v
 distance	src/misc.c	/^float distance(float x, float y, float x2, float y2)$/;"	f
+h	src/misc.h	/^	int x, y, w, h;$/;"	m	struct:__anon1
 leafarray	src/tree.h	/^typedef struct leafarray{$/;"	s
 leafarray_t	src/tree.h	/^}leafarray_t;$/;"	t	typeref:struct:leafarray
-lears	src/tree.h	/^	SDL_Rect *lears;$/;"	m	struct:leafarray
+lears	src/tree.h	/^	rect_t *lears;$/;"	m	struct:leafarray
 left	src/tree.h	/^	struct tree *left, *right, *up;$/;"	m	struct:tree	typeref:struct:tree::tree
-main	src/main.c	/^int main()$/;"	f
+main	src/main.c	/^int main(int argc, char **argv)$/;"	f
 rand_index	src/misc.c	/^int rand_index[EVO_UNITS_ON_GENERATION];$/;"	v
 rand_val	src/misc.c	/^int rand_val[EVO_UNITS_ON_GENERATION][1000];$/;"	v
+rect_t	src/misc.h	/^}rect_t;$/;"	t	typeref:struct:__anon1
 right	src/tree.h	/^	struct tree *left, *right, *up;$/;"	m	struct:tree	typeref:struct:tree::
-selected	src/sun.c	/^	bool selected;$/;"	m	struct:__anon1	file:
 size	src/tree.h	/^	int size;$/;"	m	struct:leafarray
 tree	src/tree.h	/^typedef struct tree {$/;"	s
 tree_build	src/tree.c	/^void tree_build(treenode_t *node, char **branches)$/;"	f
 tree_copy	src/tree.c	/^void tree_copy(treenode_t **dest, treenode_t **source)$/;"	f
 tree_free	src/tree.c	/^void tree_free(treenode_t **root)$/;"	f
-tree_get_leafs	src/tree.c	/^void tree_get_leafs(	treenode_t *node, SDL_Rect *leafs, int *index,$/;"	f
+tree_get_leafs	src/tree.c	/^void tree_get_leafs(	treenode_t *node, rect_t *leafs, int *index,$/;"	f
 tree_init	src/tree.c	/^void tree_init(treenode_t **root)$/;"	f
 tree_iterate	src/tree.c	/^void tree_iterate(treenode_t *root)$/;"	f
 treenode_t	src/tree.h	/^} treenode_t;$/;"	t	typeref:struct:tree
 up	src/tree.h	/^	struct tree *left, *right, *up;$/;"	m	struct:tree	typeref:struct:tree::
-x	src/sun.c	/^	int x, y;$/;"	m	struct:__anon1	file:
-y	src/sun.c	/^	int x, y;$/;"	m	struct:__anon1	file:
+w	src/misc.h	/^	int x, y, w, h;$/;"	m	struct:__anon1
+x	src/misc.h	/^	int x, y, w, h;$/;"	m	struct:__anon1
+y	src/misc.h	/^	int x, y, w, h;$/;"	m	struct:__anon1

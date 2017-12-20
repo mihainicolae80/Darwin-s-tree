@@ -2,7 +2,7 @@
 CC=gcc
 CFLAGS=-Wall -g  -c -o $@
 CC_DEP=$(CC) $^
-SDL_FLAGS=-lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx
+#SDL_FLAGS=-lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx
 
 
 run: main
@@ -13,7 +13,7 @@ build: main
 clean:
 	rm ./obj/*
 
-main: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o ./obj/evolution.o ./obj/sun.o ./obj/misc.o
+main: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o ./obj/evolution.o ./obj/misc.o
 	$(CC) -o main $^ $(SDL_FLAGS) -lm
 
 
@@ -28,7 +28,5 @@ main: ./obj/graphics.o ./obj/main.o ./obj/tree.o ./obj/tree_gfx.o ./obj/evolutio
 	$(CC) $(CFLAGS) ./src/tree_gfx.c
 ./obj/evolution.o: ./src/evolution.h ./src/evolution.c ./src/conf_evolution.h
 	$(CC) $(CFLAGS) ./src/evolution.c
-./obj/sun.o: ./src/sun.h ./src/sun.c ./src/conf_sun.h
-	$(CC) $(CFLAGS) ./src/sun.c
 ./obj/misc.o: ./src/misc.h ./src/misc.c
 	$(CC) $(CFLAGS) ./src/misc.c

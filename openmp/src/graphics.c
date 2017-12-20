@@ -6,6 +6,7 @@
 SDL_Window *_window;
 SDL_Renderer *_render;
 
+#ifdef __SDL__
 
 void GFX_init(void)
 {
@@ -32,3 +33,11 @@ void GFX_init(void)
 		fprintf(stderr, "Could not create Renderer\n");
 	}
 }
+#else
+
+void GFX_init(void)
+{
+	// dummy
+}
+
+#endif

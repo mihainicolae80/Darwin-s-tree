@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include "evolution.h"
-#include "sun.h"
 #include "conf_evolution.h"
 #include "misc.h"
 #include "threads.h"
@@ -27,31 +26,33 @@ void delegate_mutate(int id) {
 }
 
 
-int main()
+int main(int argc, char **argv)
 {
 
-	bool gfx_on;
-	SDL_Event event;
-	int i, generation = 0;
-	FILE *fitness_graph_file, *time_graph_file, *time_on_cores;
-	char *aux_genome, filename_time[100];
+	int i, generation = 0, num_threads;
+	char *aux_genome;
 	float fitness_mean;
-	uint32_t start_time;
 	task_t task;
-
+#ifdef __SDL__
+	SDL_Event event;
+#endif
 	// init
 	GFX_init();
 	TPOOL_init();
-	TPOOL_start(4);
+
+	if (argc > 1) {
+		num_threads = atoi(argv[1]);
+	} else {
+		num_threads = 1;
+	}
+
+	TPOOL_start(num_threads);
 
 	srand(0);
 	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
 		tree[0][i] = NULL;
 		tree[1][i] = NULL;
 	}
-	fitness_graph_file = fopen("fitness.out", "w");
-	time_graph_file = fopen("time.out", "w");
-	//sprintf(filename_time, "time_cores_%d", NUM_THR);
 
 	// generate initial population
 	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
@@ -65,11 +66,12 @@ int main()
 	// start threads
 	THR_run = true;
 	gfx_on = false;
-	start_time = SDL_GetTicks();
 	// main loop
 	while (THR_run) {
 		// ======= EVOLVE ======
 		printf("======= Generation %d ====== \n", generation);
+
+#ifdef __SDL__
 		// handle events
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
@@ -84,7 +86,7 @@ int main()
 				}
 			}
 		}
-
+#endif
 		// compute mean fitness
 		fitness_mean = 0;
 		for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
@@ -104,7 +106,6 @@ int main()
 		printf(	"Generation mean fitness %f\n",
 			fitness_mean
 		);
-		fprintf(fitness_graph_file, "%d\n", (int)(fitness_mean));
 		MISC_gen_rand();
 		for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
 			task.callback = delegate_mutate;
@@ -123,10 +124,7 @@ int main()
 
 	TPOOL_join();
 
-
-	fprintf(time_graph_file, "%d\n", (int)(SDL_GetTicks() - start_time));
-
-
+#ifdef __SDL__
 	// show last best tree
 	GFX_Clear(GFX_WHITE);
 	TREEGFX_draw(	tree[!buffer][0],
@@ -136,6 +134,26 @@ int main()
 			0
 	);
 	GFX_Present();
+
+	// handle events
+	THR_run = true;
+	while(THR_run)
+	while (SDL_PollEvent(&event)) {
+		if (event.type == SDL_QUIT) {
+			THR_run = false;
+			break;
+		} else if (event.type == SDL_KEYDOWN) {
+			if (event.key.keysym.sym == SDLK_g)
+				gfx_on = !gfx_on;
+			else if (event.key.keysym.sym == SDLK_s)  {
+				THR_run = false;
+				break;
+			}
+		}
+	}
+
+	SDL_Quit();
+#endif
 
 	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
 		if (tree[0][i] != NULL) {
@@ -147,9 +165,8 @@ int main()
 	}
 
 	//free(tree_genome);
-	SDL_Quit();
-	fclose(fitness_graph_file);
-	fclose(time_graph_file);
+
+
 	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
 		free(tree_genome[i]);
 	}

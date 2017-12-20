@@ -110,14 +110,16 @@ void EVO_mutate(treenode_t *tree, int unit_index)
 		EVO_mutate(tree->up, unit_index);
 }
 
+#ifdef __SDL__
+
 float EVO_fitness(treenode_t *tree, bool render)
 {
 	int sun_x = 0, sun_y = 0, subleafs_lit = 0, lx, ly, k, q, l, index = 0, i;
 	int num_branches = 0, maxdepth;
-	SDL_Rect subleaf;
+	rect_t subleaf;
 	float px, py;
 	bool collision;
-	SDL_Rect leafs[TREEGFX_MAX_NUM_LEAF];
+	rect_t leafs[TREEGFX_MAX_NUM_LEAF];
 	const int dx[] = {	-EVO_LEAF_SIZE/3,	0, EVO_LEAF_SIZE/3,
 				-EVO_LEAF_SIZE/3, 	0, EVO_LEAF_SIZE/3,
 				-EVO_LEAF_SIZE/3,	0, EVO_LEAF_SIZE/3};
@@ -190,7 +192,12 @@ float EVO_fitness(treenode_t *tree, bool render)
 							GFX_COLOR_GET_BLUE(GFX_GREEN),
 							GFX_COLOR_GET_ALPHA(GFX_GREEN)
 						);
-						SDL_RenderFillRect(_render, &subleaf);
+						SDL_Rect aux;
+						aux.x = subleaf.x;
+						aux.y = subleaf.y;
+						aux.w = subleaf.w;
+						aux.h = subleaf.h;
+						SDL_RenderFillRect(_render, &aux);
 					}
 				} else {
 					if (render) {
@@ -217,6 +224,77 @@ float EVO_fitness(treenode_t *tree, bool render)
 
 	return (float)subleafs_lit * pow(0.90, maxdepth);
 }
+#else
+
+float EVO_fitness(treenode_t *tree, bool render)
+{
+	int sun_x = 0, sun_y = 0, subleafs_lit = 0, lx, ly, k, q, l, index = 0, i;
+	int num_branches = 0, maxdepth;
+	float px, py;
+	bool collision;
+	rect_t leafs[TREEGFX_MAX_NUM_LEAF];
+	const int dx[] = {	-EVO_LEAF_SIZE/3,	0, EVO_LEAF_SIZE/3,
+				-EVO_LEAF_SIZE/3, 	0, EVO_LEAF_SIZE/3,
+				-EVO_LEAF_SIZE/3,	0, EVO_LEAF_SIZE/3};
+	const int dy[] = {	-EVO_LEAF_SIZE/3, -EVO_LEAF_SIZE/3,-EVO_LEAF_SIZE/3,
+					0,		0,		0,
+			 	EVO_LEAF_SIZE/3,  EVO_LEAF_SIZE/3, EVO_LEAF_SIZE/3};
+
+	maxdepth = 0;
+	// get all leafs as rectangles
+	tree_get_leafs(	tree, leafs, &index, &num_branches,
+			SCREEN_WIDTH / 2,
+			SCREEN_HEIGHT - 100,
+			0,
+			0,
+			&maxdepth
+	);
+
+	for (sun_x = 0; sun_x < SCREEN_WIDTH; sun_x += EVO_SUN_STEP_INC) {
+
+		// light on every leaf
+		sun_y = TREEGFX_EARTH_LEVEL - (TREEGFX_EARTH_LEVEL - 50)
+			* sin((float)PI * sun_x / SCREEN_WIDTH);
+		for (i = 0; i < index; i++) {
+			// leaf on every subleaf
+			for (q = 0; q < 9; q ++) {
+				// subleaf center coordinates
+				lx = leafs[i].x + leafs[i].w/2 + dx[q];
+				ly = leafs[i].y + leafs[i].h/2 + dy[q];
+				// compute intermediary points
+				collision = false;
+				for(l = 0; l < EVO_SUN_SAMPLES && !collision; l++) {
+					px = lx + l *((float)sun_x - lx) / EVO_SUN_SAMPLES;
+					py = ly + l * ((float)sun_y - ly) / EVO_SUN_SAMPLES;
+
+					// check collision with all other blocks
+					for (k = 0; k < index; k++) {
+						if ((k != i)
+						&& (px >= leafs[k].x)
+						&& (px <= leafs[k].x + leafs[k].w)
+						&& (py >= leafs[k].y)
+						&& (py <= leafs[k].y + leafs[k].h)
+						){
+							collision = true;
+							break;
+						}
+					}
+				}
+
+				if (!collision) {
+					subleafs_lit ++;
+				} else {
+				}
+			}
+
+		}
+	}
+
+	return (float)subleafs_lit * pow(0.90, maxdepth);
+}
+
+#endif
+
 
 void EVO_get_random_genome(char genome[], int maxlen)
 {

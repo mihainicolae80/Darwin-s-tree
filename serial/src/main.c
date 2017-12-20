@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include "evolution.h"
-#include "sun.h"
 #include "conf_evolution.h"
 #include "misc.h"
 
@@ -16,15 +15,13 @@
 int main()
 {
 	bool run, gfx_on;
-	SDL_Event event;
 	char *tree_genome[EVO_UNITS_ON_GENERATION], *aux_genome;
 	treenode_t *tree[2][EVO_UNITS_ON_GENERATION];
 	int i, buffer = 0, generation = 0, gen;
 	float fitness[EVO_UNITS_ON_GENERATION], fitness_mean;
-	FILE *fitness_graph_file, *time_graph_file;
-	uint32_t start_time;
-
-
+#ifdef __SDL__
+	SDL_Event event;
+#endif
 	// init
 	GFX_init();
 	srand(0);
@@ -32,8 +29,6 @@ int main()
 		tree[0][i] = NULL;
 		tree[1][i] = NULL;
 	}
-	fitness_graph_file = fopen("fitness.out", "w");
-	time_graph_file = fopen("time.out", "w");
 
 	// generate initial population
 	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
@@ -47,7 +42,6 @@ int main()
 	// main loop
 	run = true;
 	gfx_on = false;
-	start_time = SDL_GetTicks();
 
 	for (gen = 0; gen < NUM_GEN; gen ++){
 
@@ -60,7 +54,7 @@ int main()
 			fitness[i] = EVO_fitness(tree[buffer][i], gfx_on);
 			printf("tree[%d] fitness %f\n",i, fitness[i]);
 			fitness_mean += fitness[i];
-
+#ifdef __SDL__
 			// handle events
 			while (SDL_PollEvent(&event)) {
 				if (event.type == SDL_QUIT) {
@@ -75,6 +69,7 @@ int main()
 					}
 				}
 			}
+#endif
 		}
 
 		// sort by fitness
@@ -90,15 +85,9 @@ int main()
 			fitness_mean / EVO_UNITS_ON_GENERATION
 		);
 
-		fprintf(fitness_graph_file, "%d\n", (int)(fitness_mean / EVO_UNITS_ON_GENERATION));
-
-
 		buffer = !buffer;
 		generation ++;
 	}
-
-	fprintf(time_graph_file, "%d\n", (int)(SDL_GetTicks() - start_time));
-
 
 	// show last best tree
 	GFX_Clear(GFX_WHITE);
@@ -110,6 +99,24 @@ int main()
 	);
 	GFX_Present();
 
+#ifdef __SDL__
+	// handle events
+	run = true;
+	while(run)
+	while (SDL_PollEvent(&event)) {
+		if (event.type == SDL_QUIT) {
+			run = false;
+			break;
+		} else if (event.type == SDL_KEYDOWN) {
+			if (event.key.keysym.sym == SDLK_g)
+				gfx_on = !gfx_on;
+			else if (event.key.keysym.sym == SDLK_s)  {
+				run = false;
+				break;
+			}
+		}
+	}
+#endif
 
 	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
 		if (tree[0][i] != NULL) {
@@ -121,9 +128,10 @@ int main()
 	}
 
 	//free(tree_genome);
+#ifdef __SDL__
 	SDL_Quit();
-	fclose(fitness_graph_file);
-	fclose(time_graph_file);
+#endif
+
 	for (i = 0; i < EVO_UNITS_ON_GENERATION; i++) {
 		free(tree_genome[i]);
 	}

@@ -17,6 +17,8 @@ void TREEGFX_draw_earth()
 	);
 }
 
+#ifdef __SDL__
+
 void TREEGFX_draw(treenode_t *tree, int x, int y, int angle, int depth)
 {
 	int branches = 0;
@@ -99,3 +101,9 @@ void TREEGFX_draw(treenode_t *tree, int x, int y, int angle, int depth)
 	}
 
 }
+#else
+void TREEGFX_draw(treenode_t *tree, int x, int y, int angle, int depth)
+{
+	// dummy
+}
+#endif

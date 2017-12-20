@@ -4,6 +4,15 @@
 #include <math.h>
 #include "conf_evolution.h"
 
+// #define __SDL__
+
+
+typedef struct {
+	int x, y, w, h;
+}rect_t;
+
+
+
 
 #define PI 3.14159
 #define ABS(x)	((x) < 0 ? -(x) : (x))
