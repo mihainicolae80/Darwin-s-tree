@@ -6,7 +6,7 @@ CC_DEP=$(CC) $^
 #SDL_FLAGS=-lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx
 
 run: main
-	./main
+	./main 4
 
 build: main
 

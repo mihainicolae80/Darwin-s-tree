@@ -64,13 +64,12 @@ int main(int argc, char **argv)
 	}
 
 	// start threads
-	THR_run = true;
 	gfx_on = false;
+	THR_run = true;
 	// main loop
 	while (THR_run) {
 		// ======= EVOLVE ======
 		printf("======= Generation %d ====== \n", generation);
-
 #ifdef __SDL__
 		// handle events
 		while (SDL_PollEvent(&event)) {

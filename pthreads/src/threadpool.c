@@ -9,6 +9,7 @@ static pthread_mutex_t _mux_queue, _mux_cond;
 static pthread_mutex_t _mux_aux, _mux_wait_all;
 static pthread_cond_t _cond_queue, _cond_wait_all;
 static int _busy_threads;
+bool THR_run;
 
 
 static task_t _dequeue()
@@ -24,9 +25,7 @@ static task_t _dequeue()
 
 void TPOOL_enqueue(task_t task)
 {
-	fflush(stdout);
 	pthread_mutex_lock(&_mux_aux);
-	fflush(stdout);
 	QUEUE_enqueue(task);
 	pthread_mutex_unlock(&_mux_aux);
 

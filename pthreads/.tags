@@ -71,6 +71,7 @@ THR_done_cond	src/threads.c	/^pthread_cond_t THR_done_cond[EVO_UNITS_ON_GENERATI
 THR_mutex_array_init	src/threads.c	/^void THR_mutex_array_init(pthread_mutex_t *mutexes, int num)$/;"	f
 THR_mutex_array_lock	src/threads.c	/^void THR_mutex_array_lock(pthread_mutex_t *mutexes, int num)$/;"	f
 THR_mutex_array_unlock	src/threads.c	/^void THR_mutex_array_unlock(pthread_mutex_t *mutexes, int num)$/;"	f
+THR_run	src/threadpool.c	/^static bool THR_run;$/;"	v	file:
 THR_run	src/threads.c	/^bool THR_run;$/;"	v
 THR_start_threads	src/threads.c	/^void THR_start_threads(int num_threads, thread_foo_t foo)$/;"	f
 THR_thread	src/threads.c	/^void *THR_thread(void *threadid)$/;"	f

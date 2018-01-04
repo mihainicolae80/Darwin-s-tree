@@ -1,0 +1,1 @@
+Make sure threads actually finish (see pthreads TPOOL_join).
