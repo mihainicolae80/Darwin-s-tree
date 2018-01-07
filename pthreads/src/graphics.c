@@ -2,11 +2,13 @@
 #include "graphics.h"
 #include <stdio.h>
 #include "conf_graphics.h"
+#include "misc.h"
+
+
+#ifdef __SDL__
 
 SDL_Window *_window;
 SDL_Renderer *_render;
-
-#ifdef __SDL__
 
 void GFX_init(void)
 {

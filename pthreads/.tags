@@ -68,14 +68,14 @@ THR_canwork_cond	src/threads.c	/^pthread_cond_t THR_canwork_cond;$/;"	v
 THR_cond_array_init	src/threads.c	/^void THR_cond_array_init(pthread_cond_t *cond, int num)$/;"	f
 THR_done	src/threads.c	/^pthread_mutex_t THR_done[EVO_UNITS_ON_GENERATION];$/;"	v
 THR_done_cond	src/threads.c	/^pthread_cond_t THR_done_cond[EVO_UNITS_ON_GENERATION];$/;"	v
+THR_join_threads	src/threads.c	/^void THR_join_threads(int num_threads)$/;"	f
 THR_mutex_array_init	src/threads.c	/^void THR_mutex_array_init(pthread_mutex_t *mutexes, int num)$/;"	f
 THR_mutex_array_lock	src/threads.c	/^void THR_mutex_array_lock(pthread_mutex_t *mutexes, int num)$/;"	f
 THR_mutex_array_unlock	src/threads.c	/^void THR_mutex_array_unlock(pthread_mutex_t *mutexes, int num)$/;"	f
-THR_run	src/threadpool.c	/^static bool THR_run;$/;"	v	file:
+THR_run	src/threadpool.c	/^bool THR_run;$/;"	v
 THR_run	src/threads.c	/^bool THR_run;$/;"	v
 THR_start_threads	src/threads.c	/^void THR_start_threads(int num_threads, thread_foo_t foo)$/;"	f
 THR_thread	src/threads.c	/^void *THR_thread(void *threadid)$/;"	f
-THR_wait_for_threads	src/threads.c	/^void THR_wait_for_threads(void)$/;"	f
 TO_RADIANS	src/misc.h	21;"	d
 TPOOL_enqueue	src/threadpool.c	/^void TPOOL_enqueue(task_t task)$/;"	f
 TPOOL_init	src/threadpool.c	/^void TPOOL_init(void)$/;"	f
@@ -101,7 +101,7 @@ _SIZE	src/queue.c	4;"	d	file:
 _THREADS__H_	src/threads.h	2;"	d
 __CONF_GRAPHICS_H__	src/conf_graphics.h	2;"	d
 __GRAPHICS_H__	src/graphics.h	2;"	d
-_busy_threads	src/threadpool.c	/^static int _busy_threads;$/;"	v	file:
+_busy_threads	src/threadpool.c	/^static int _busy_threads, _num_threads;$/;"	v	file:
 _cond_queue	src/threadpool.c	/^static pthread_cond_t _cond_queue, _cond_wait_all;$/;"	v	file:
 _cond_wait_all	src/threadpool.c	/^static pthread_cond_t _cond_queue, _cond_wait_all;$/;"	v	file:
 _data	src/queue.c	/^task_t _data[_SIZE];$/;"	v
@@ -110,6 +110,7 @@ _mux_aux	src/threadpool.c	/^static pthread_mutex_t _mux_aux, _mux_wait_all;$/;"	
 _mux_cond	src/threadpool.c	/^static pthread_mutex_t _mux_queue, _mux_cond;$/;"	v	file:
 _mux_queue	src/threadpool.c	/^static pthread_mutex_t _mux_queue, _mux_cond;$/;"	v	file:
 _mux_wait_all	src/threadpool.c	/^static pthread_mutex_t _mux_aux, _mux_wait_all;$/;"	v	file:
+_num_threads	src/threadpool.c	/^static int _busy_threads, _num_threads;$/;"	v	file:
 _render	src/graphics.c	/^SDL_Renderer *_render;$/;"	v
 _thread	src/threadpool.c	/^static void *_thread(void *threadid)$/;"	f	file:
 _threads	src/threads.c	/^static pthread_t _threads[20];$/;"	v	file:

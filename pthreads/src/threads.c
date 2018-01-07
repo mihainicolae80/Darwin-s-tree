@@ -31,11 +31,11 @@ void THR_start_threads(int num_threads, thread_foo_t foo)
 	}
 }
 
-void THR_wait_for_threads(void)
+void THR_join_threads(int num_threads)
 {
 	void *status;
 
-	for(uint64_t i = 0; i < EVO_UNITS_ON_GENERATION; i++)
+	for(uint64_t i = 0; i < num_threads; i++)
 		if (pthread_join(_threads[i], &status)) {
 			printf("Error exiting thread[%lu]\n", i);
 		}

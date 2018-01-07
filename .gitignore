@@ -1,3 +1,4 @@
 *.o
 main
 .fuse_*
+.tags

@@ -24,7 +24,7 @@ extern bool gfx_on;
 
 void THR_start_threads(int num_threads, thread_foo_t foo);
 void* THR_thread(void *threadid);
-void THR_wait_for_threads(void);
+void THR_join_threads(int num_threads);
 void THR_mutex_array_lock(pthread_mutex_t *mutexes, int num);
 void THR_mutex_array_unlock(pthread_mutex_t *mutexes, int num);
 void THR_mutex_array_init(pthread_mutex_t *mutexes, int num);

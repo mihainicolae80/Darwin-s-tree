@@ -1,17 +1,21 @@
 #ifndef __GRAPHICS_H__
 #define __GRAPHICS_H__
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
+
 #include <stdbool.h>
 #include <stdint.h>
 #include "misc.h"
 
+#ifdef __SDL__
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL2_gfxPrimitives.h>
+#endif
+
+
 typedef uint32_t GFX_color_t;
 
-extern SDL_Window *_window;
-extern SDL_Renderer *_render;
+
 
 // ========= COLORS =========
 #define GFX_WHITE	0xffffffff
@@ -28,6 +32,9 @@ extern SDL_Renderer *_render;
 void GFX_init(void);
 
 #ifdef __SDL__
+
+extern SDL_Window *_window;
+extern SDL_Renderer *_render;
 
 static inline void GFX_SetDrawColor(GFX_color_t color)
 {

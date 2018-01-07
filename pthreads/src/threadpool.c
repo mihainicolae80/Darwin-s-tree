@@ -8,7 +8,7 @@
 static pthread_mutex_t _mux_queue, _mux_cond;
 static pthread_mutex_t _mux_aux, _mux_wait_all;
 static pthread_cond_t _cond_queue, _cond_wait_all;
-static int _busy_threads;
+static int _busy_threads, _num_threads;
 bool THR_run;
 
 
@@ -94,6 +94,7 @@ void TPOOL_init(void)
 void TPOOL_start(int num_threads)
 {
 	_busy_threads = 0;
+	_num_threads = num_threads;
 	THR_run = true;
 	THR_start_threads(num_threads, _thread);
 }
@@ -115,4 +116,6 @@ void TPOOL_join(void)
 	pthread_mutex_lock(&_mux_cond);
 	pthread_cond_broadcast(&_cond_queue);
 	pthread_mutex_unlock(&_mux_cond);
+
+	THR_join_threads(_num_threads);
 }
