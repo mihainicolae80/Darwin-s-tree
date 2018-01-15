@@ -4,7 +4,7 @@
 #include <math.h>
 #include "conf_evolution.h"
 
-// #define __SDL__
+#define __SDL__
 
 
 typedef struct {

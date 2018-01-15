@@ -41,7 +41,7 @@ int main()
 
 	// main loop
 	run = true;
-	gfx_on = false;
+	gfx_on = true;
 
 	for (gen = 0; gen < NUM_GEN; gen ++){
 

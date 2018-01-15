@@ -50,6 +50,7 @@ PI	src/misc.h	17;"	d
 SCREENC_COLOR	src/conf_graphics.h	8;"	d
 SCREEN_HEIGHT	src/conf_graphics.h	7;"	d
 SCREEN_WIDTH	src/conf_graphics.h	6;"	d
+SDL_FLAGS	Makefile	/^SDL_FLAGS=-lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx$/;"	m
 SIGN	src/misc.h	19;"	d
 SUN_COLOR	src/conf_sun.h	5;"	d
 SUN_RADIUS	src/conf_sun.h	4;"	d
@@ -71,6 +72,7 @@ TREE_GFX__H_	src/tree_gfx.h	2;"	d
 TREE__H_	src/tree.h	2;"	d
 __CONF_GRAPHICS_H__	src/conf_graphics.h	2;"	d
 __GRAPHICS_H__	src/graphics.h	2;"	d
+__SDL__	src/misc.h	7;"	d
 _render	src/graphics.c	/^SDL_Renderer *_render;$/;"	v
 _window	src/graphics.c	/^SDL_Window *_window;$/;"	v
 distance	src/misc.c	/^float distance(float x, float y, float x2, float y2)$/;"	f
