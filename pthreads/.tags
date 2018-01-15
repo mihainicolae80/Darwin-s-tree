@@ -28,18 +28,18 @@ EVO_fitness	src/evolution.c	/^float EVO_fitness(treenode_t *tree, bool render)$/
 EVO_get_random_genome	src/evolution.c	/^void EVO_get_random_genome(char genome[], int maxlen)$/;"	f
 EVO_mutate	src/evolution.c	/^void EVO_mutate(treenode_t *tree, int unit_index)$/;"	f
 EVO_sort_by_fitness	src/evolution.c	/^void EVO_sort_by_fitness(float *fitness, treenode_t **trees)$/;"	f
-GFX_BLACK	src/graphics.h	18;"	d
-GFX_BLUE	src/graphics.h	21;"	d
-GFX_COLOR_GET_ALPHA	src/graphics.h	22;"	d
-GFX_COLOR_GET_BLUE	src/graphics.h	25;"	d
-GFX_COLOR_GET_GREEN	src/graphics.h	24;"	d
-GFX_COLOR_GET_RED	src/graphics.h	23;"	d
+GFX_BLACK	src/graphics.h	22;"	d
+GFX_BLUE	src/graphics.h	25;"	d
+GFX_COLOR_GET_ALPHA	src/graphics.h	26;"	d
+GFX_COLOR_GET_BLUE	src/graphics.h	29;"	d
+GFX_COLOR_GET_GREEN	src/graphics.h	28;"	d
+GFX_COLOR_GET_RED	src/graphics.h	27;"	d
 GFX_Clear	src/graphics.h	/^static inline void GFX_Clear(GFX_color_t color)$/;"	f
-GFX_GREEN	src/graphics.h	20;"	d
+GFX_GREEN	src/graphics.h	24;"	d
 GFX_Present	src/graphics.h	/^static inline void GFX_Present()$/;"	f
-GFX_RED	src/graphics.h	19;"	d
+GFX_RED	src/graphics.h	23;"	d
 GFX_SetDrawColor	src/graphics.h	/^static inline void GFX_SetDrawColor(GFX_color_t color)$/;"	f
-GFX_WHITE	src/graphics.h	17;"	d
+GFX_WHITE	src/graphics.h	21;"	d
 GFX_color_t	src/graphics.h	/^typedef uint32_t GFX_color_t;$/;"	t
 GFX_drawline	src/graphics.h	/^static inline void GFX_drawline(int x, int y, int x2, int y2, float thick, GFX_color_t color)$/;"	f
 GFX_init	src/graphics.c	/^void GFX_init(void)$/;"	f

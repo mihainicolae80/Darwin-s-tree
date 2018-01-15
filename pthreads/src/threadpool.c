@@ -101,6 +101,7 @@ void TPOOL_start(int num_threads)
 
 void TPOOL_wait_for_all(void)
 {
+	// FIXME: race condition /w _thread
 	while ((_busy_threads > 0) || (QUEUE_size() > 0))
 	{
 		pthread_mutex_lock(&_mux_wait_all);

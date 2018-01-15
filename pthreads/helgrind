@@ -1,0 +1,153 @@
+==1049== Helgrind, a thread error detector
+==1049== Copyright (C) 2007-2015, and GNU GPL'd, by OpenWorks LLP et al.
+==1049== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==1049== Command: ./main
+==1049==
+Thread[0] started
+======= Generation 0 ======
+==1049== ---Thread-Announcement------------------------------------------
+==1049==
+==1049== Thread #2 was created
+==1049==    at 0x546D39E: clone (clone.S:74)
+==1049==    by 0x514F149: create_thread (createthread.c:102)
+==1049==    by 0x5150E83: pthread_create@@GLIBC_2.2.5 (pthread_create.c:679)
+==1049==    by 0x4C34BB7: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1049==    by 0x402C0C: THR_start_threads (threads.c:27)
+==1049==    by 0x403054: TPOOL_start (threadpool.c:99)
+==1049==    by 0x400DD3: main (main.c:50)
+==1049==
+==1049== ---Thread-Announcement------------------------------------------
+==1049==
+==1049== Thread #1 is the program's root thread
+==1049==
+==1049== ----------------------------------------------------------------
+==1049==
+==1049==  Lock at 0x604200 was first observed
+==1049==    at 0x4C360BA: pthread_mutex_init (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1049==    by 0x402FD2: TPOOL_init (threadpool.c:86)
+==1049==    by 0x400D9D: main (main.c:41)
+==1049==  Address 0x604200 is 0 bytes inside data symbol "_mux_cond"
+==1049==
+==1049== Possible data race during write of size 4 at 0x604330 by thread #2
+==1049== Locks held: 1, at address 0x604200
+==1049==    at 0x402EFB: _thread (threadpool.c:53)
+==1049==    by 0x4C34DB6: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1049==    by 0x51506B9: start_thread (pthread_create.c:333)
+==1049==
+==1049== This conflicts with a previous read of size 4 by thread #1
+==1049== Locks held: none
+==1049==    at 0x403081: TPOOL_wait_for_all (threadpool.c:104)
+==1049==    by 0x400F07: main (main.c:97)
+==1049==  Address 0x604330 is 0 bytes inside data symbol "_busy_threads"
+==1049==
+==1049== ----------------------------------------------------------------
+==1049==
+==1049==  Lock at 0x604240 was first observed
+==1049==    at 0x4C360BA: pthread_mutex_init (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1049==    by 0x402FE1: TPOOL_init (threadpool.c:87)
+==1049==    by 0x400D9D: main (main.c:41)
+==1049==  Address 0x604240 is 0 bytes inside data symbol "_mux_aux"
+==1049==
+==1049== Possible data race during write of size 4 at 0x60E580 by thread #2
+==1049== Locks held: 1, at address 0x604240
+==1049==    at 0x4031E0: QUEUE_dequeue (queue.c:37)
+==1049==    by 0x402E18: _dequeue (threadpool.c:20)
+==1049==    by 0x402F16: _thread (threadpool.c:58)
+==1049==    by 0x4C34DB6: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1049==    by 0x51506B9: start_thread (pthread_create.c:333)
+==1049==
+==1049== This conflicts with a previous read of size 4 by thread #1
+==1049== Locks held: none
+==1049==    at 0x4031F4: QUEUE_size (queue.c:45)
+==1049==    by 0x40308F: TPOOL_wait_for_all (threadpool.c:104)
+==1049==    by 0x400F07: main (main.c:97)
+==1049==  Address 0x60e580 is 0 bytes inside data symbol "size"
+==1049==
+fitness[0]=1296.000000
+fitness[1]=1620.304565
+fitness[2]=1712.421021
+fitness[3]=1762.940674
+fitness[4]=1049.760010
+fitness[5]=688.747559
+fitness[6]=1296.000000
+fitness[7]=1299.532715
+fitness[8]=1166.400024
+fitness[9]=557.885498
+==1049== ----------------------------------------------------------------
+==1049==
+==1049==  Lock at 0x604200 was first observed
+==1049==    at 0x4C360BA: pthread_mutex_init (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1049==    by 0x402FD2: TPOOL_init (threadpool.c:86)
+==1049==    by 0x400D9D: main (main.c:41)
+==1049==  Address 0x604200 is 0 bytes inside data symbol "_mux_cond"
+==1049==
+==1049== Possible data race during write of size 4 at 0x604330 by thread #2
+==1049== Locks held: 1, at address 0x604200
+==1049==    at 0x402F54: _thread (threadpool.c:68)
+==1049==    by 0x4C34DB6: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1049==    by 0x51506B9: start_thread (pthread_create.c:333)
+==1049==
+==1049== This conflicts with a previous read of size 4 by thread #1
+==1049== Locks held: none
+==1049==    at 0x403081: TPOOL_wait_for_all (threadpool.c:104)
+==1049==    by 0x400F07: main (main.c:97)
+==1049==  Address 0x604330 is 0 bytes inside data symbol "_busy_threads"
+==1049==
+Generation mean fitness 1244.999268
+======= Generation 1 ======
+fitness[0]=1712.421021
+fitness[1]=2233.823730
+fitness[2]=944.783997
+fitness[3]=1138.500000
+fitness[4]=478.953003
+fitness[5]=1049.760010
+fitness[6]=1049.760010
+fitness[7]=2141.116699
+fitness[8]=850.305603
+fitness[9]=1296.000000
+Generation mean fitness 1289.542480
+======= Generation 2 ======
+fitness[0]=1695.887329
+fitness[1]=1049.760010
+fitness[2]=2233.823730
+fitness[3]=2233.823730
+fitness[4]=1166.400024
+fitness[5]=2150.695801
+fitness[6]=1296.000000
+fitness[7]=2336.445068
+fitness[8]=1440.000000
+fitness[9]=1138.500000
+Generation mean fitness 1674.133545
+======= Generation 3 ======
+fitness[0]=3078.637695
+fitness[1]=1138.500000
+fitness[2]=1821.989746
+fitness[3]=2930.601807
+fitness[4]=1557.712646
+fitness[5]=2803.646484
+fitness[6]=2233.823730
+fitness[7]=2050.312500
+fitness[8]=2409.789795
+fitness[9]=2120.980957
+Generation mean fitness 2214.599365
+==1049== ----------------------------------------------------------------
+==1049==
+==1049== Possible data race during write of size 1 at 0x60E060 by thread #1
+==1049== Locks held: none
+==1049==    at 0x40309B: TPOOL_join (threadpool.c:115)
+==1049==    by 0x40104B: main (main.c:125)
+==1049==
+==1049== This conflicts with a previous read of size 1 by thread #2
+==1049== Locks held: none
+==1049==    at 0x402F8C: _thread (threadpool.c:48)
+==1049==    by 0x4C34DB6: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1049==    by 0x51506B9: start_thread (pthread_create.c:333)
+==1049==  Address 0x60e060 is 0 bytes inside data symbol "THR_run"
+==1049==
+Thread[0] finished
+==1049==
+==1049== For counts of detected and suppressed errors, rerun with: -v
+==1049== Use --history-level=approx or =none to gain increased speed, at
+==1049== the cost of reduced accuracy of conflicting-access information
+==1049== ERROR SUMMARY: 97 errors from 4 contexts (suppressed: 665 from 92)
+

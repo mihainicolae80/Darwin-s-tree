@@ -46,6 +46,7 @@ int main(int argc, char **argv)
 		num_threads = 1;
 	}
 
+	THR_run = true;
 	TPOOL_start(num_threads);
 
 	srand(0);
@@ -65,7 +66,7 @@ int main(int argc, char **argv)
 
 	// start threads
 	gfx_on = false;
-	THR_run = true;
+
 	// main loop
 	while (THR_run) {
 		// ======= EVOLVE ======
