@@ -1,0 +1,20 @@
+#ifndef CONF_TREE_GFX__H_
+#define CONF_TREE_GFX__H_
+
+#include "conf_graphics.h"
+
+#define TREEGFX_BRANCH_LEN 	40.0f//100.0f
+#define TREEGFX_BRANCH_THICK 	2.0f
+#define TREEGFX_BRANCH_ANGLE	15 //45
+#define TREEGFX_BRANCH_DECAY	0.95
+#define TREEGFX_EARTH_COLOR	0xFF36332D
+#define TREEGFX_EARTH_LEVEL	(SCREEN_HEIGHT - 100)
+#define TREEGFX_EARTH_THICK	2.0f
+#define TREEGFX_LEAF_COLOR	0xff009900
+#define TREEGFX_KNOT_SIZE	2.0f
+#define TREEGFX_KNOT_COLOR	0xff00AA00
+#define TREEGFX_MAX_NUM_LEAF	10000
+
+// TODO Combine config files where possible
+
+#endif
